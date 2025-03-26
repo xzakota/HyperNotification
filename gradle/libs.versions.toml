@@ -1,0 +1,22 @@
+[versions]
+kotlin = "2.1.10"
+agp = "8.9.0"
+junit5 = "5.11.2"
+
+hyper-notification = "1.0"
+
+[libraries]
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.3" }
+
+hyper-notification-focus-api = { module = "com.xzakota.hyper.notification:focus-api", version.ref = "hyper-notification" }
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit5" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit5" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
