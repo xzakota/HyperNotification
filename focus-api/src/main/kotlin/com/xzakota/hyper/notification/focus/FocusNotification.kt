@@ -1,7 +1,5 @@
 package com.xzakota.hyper.notification.focus
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.model.FocusTemplate
@@ -13,6 +11,7 @@ import java.util.function.Consumer
 class FocusNotification private constructor() {
     private lateinit var template : FocusParam
     private val pics = mutableMapOf<String, Parcelable?>()
+    private val actions = mutableMapOf<String, Parcelable?>()
     // internal var isCustomFocus = false
 
     fun buildBundle() : Bundle = Bundle().apply {
@@ -21,24 +20,36 @@ class FocusNotification private constructor() {
         if (pics.isNotEmpty()) {
             putBundle("miui.focus.pics", buildPicsBundle())
         }
+
+        if (pics.isNotEmpty()) {
+            putBundle("miui.focus.actions", buildActionsBundle())
+        }
     }
 
     fun getParamJSON() : String = JSONUtils.toJSONString(template)
 
-    internal fun createParcelable(key : String, value : Parcelable?) : String? = if (value != null) {
+    internal fun createPicture(key : String, value : Parcelable?) : String? = if (value != null) {
         pics[key] = value
         key
     } else {
         null
     }
 
-    internal fun createBitmap(
-        key : String,
-        value : Bitmap
-    ) : String? = createParcelable(key, Icon.createWithBitmap(value))
+    internal fun createAction(key : String, value : Parcelable?) : String? = if (value != null) {
+        actions[key] = value
+        key
+    } else {
+        null
+    }
 
     private fun buildPicsBundle() : Bundle = Bundle().apply {
         pics.forEach { (k, v) ->
+            putParcelable(k, v)
+        }
+    }
+
+    private fun buildActionsBundle() : Bundle = Bundle().apply {
+        actions.forEach { (k, v) ->
             putParcelable(k, v)
         }
     }

@@ -1,6 +1,5 @@
 package com.xzakota.hyper.notification.focus.model
 
-import android.graphics.Bitmap
 import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.FocusNotification
 import kotlinx.serialization.Serializable
@@ -38,8 +37,8 @@ data class FocusTemplate(
         this.notification = notification
     }
 
-    fun createParcelable(key : String, value : Parcelable?) : String? = notification?.createParcelable(key, value)
-    fun createBitmap(key : String, value : Bitmap) : String? = notification?.createBitmap(key, value)
+    fun createPicture(key : String, value : Parcelable?) : String? = notification?.createPicture(key, value)
+    fun createAction(key : String, value : Parcelable?) : String? = notification?.createAction(key, value)
 
     fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo {
         consumer.accept(this)

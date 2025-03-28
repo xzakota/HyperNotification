@@ -80,7 +80,7 @@ notificationManager.notify(
 )
 ```
 
-更多使用可参考 [example](https://github.com/xzakota/HyperNotification/tree/main/example/src/main/kotlin/com/xzakota/hyper/notification/focus/example/ui/MainActivity.kt#L57) 模块或浏览源代码
+更多使用可参考 [example](https://github.com/xzakota/HyperNotification/tree/main/example/src/main/kotlin/com/xzakota/hyper/notification/focus/example/ui/MainActivity.kt#L63) 模块或浏览源代码
 
 ### TODO
 - Custom Focus

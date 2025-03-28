@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
@@ -53,15 +54,18 @@ class MainActivity : Activity() {
         }
 
         val intent = packageManager.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID) ?: return
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
         val iconBitmap = packageManager.getActivityIcon(intent).toBitmap()
         val icon = Icon.createWithBitmap(iconBitmap)
         val uri = intent.toUri(Intent.URI_INTENT_SCHEME)
 
         // build focus bundle
         val extras = FocusNotification.buildV2 {
+            val logo = createPicture("key_logo", icon)
+
             enableFloat = true
             ticker = tickerText
-            tickerPic = createParcelable("miui.focus.ticker_pic", icon)
+            tickerPic = logo
 
             baseInfo {
                 type = 1
@@ -82,8 +86,15 @@ class MainActivity : Activity() {
 
             actions {
                 addActionInfo {
-                    actionIcon = createParcelable("miui.focus.action_pic", icon)
+                    actionIcon = logo
                     actionIntent = uri
+                }
+
+                addActionInfo {
+                    action = createAction(
+                        "key_action1",
+                        Notification.Action.Builder(icon, null, pendingIntent).build()
+                    )
                 }
             }
         }
@@ -103,6 +114,7 @@ class MainActivity : Activity() {
                 .setTicker(tickerText)
                 .setContentTitle(titleText)
                 .setContentText(contentText)
+                .setContentIntent(pendingIntent)
                 .addExtras(extras)
                 .build()
         )
