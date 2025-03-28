@@ -1,13 +1,14 @@
 package com.xzakota.hyper.notification.focus.model
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.FocusNotification
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.util.function.Consumer
 
-@Serializable
 @Suppress("unused")
+@Serializable
 data class FocusTemplate(
     var ticker : String? = null,
     var tickerPic : String? = null,
@@ -28,6 +29,8 @@ data class FocusTemplate(
     var bgInfo : BgInfo? = null,
     var actions : ArrayList<ActionInfo>? = null
 ) {
+    // var filterWhenNoPermission = false
+
     @Transient
     internal var notification : FocusNotification? = null
 
@@ -36,6 +39,7 @@ data class FocusTemplate(
     }
 
     fun createParcelable(key : String, value : Parcelable?) : String? = notification?.createParcelable(key, value)
+    fun createBitmap(key : String, value : Bitmap) : String? = notification?.createBitmap(key, value)
 
     fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo {
         consumer.accept(this)

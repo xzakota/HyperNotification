@@ -2,6 +2,7 @@ package com.xzakota.hyper.notification.focus.model
 
 import kotlinx.serialization.Serializable
 
+@Suppress("unused")
 @Serializable
 data class ProgressInfo(
     var progress : Int? = null,

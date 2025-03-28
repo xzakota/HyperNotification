@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.xzakota.hyper.notification.focus.model
 
 import kotlinx.serialization.Serializable

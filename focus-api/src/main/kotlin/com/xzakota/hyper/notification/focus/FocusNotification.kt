@@ -1,5 +1,7 @@
 package com.xzakota.hyper.notification.focus
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.model.FocusTemplate
@@ -11,10 +13,14 @@ import java.util.function.Consumer
 class FocusNotification private constructor() {
     private lateinit var template : FocusParam
     private val pics = mutableMapOf<String, Parcelable?>()
+    // internal var isCustomFocus = false
 
     fun buildBundle() : Bundle = Bundle().apply {
         putString("miui.focus.param", getParamJSON())
-        putBundle("miui.focus.pics", buildPicsBundle())
+
+        if (pics.isNotEmpty()) {
+            putBundle("miui.focus.pics", buildPicsBundle())
+        }
     }
 
     fun getParamJSON() : String = JSONUtils.toJSONString(template)
@@ -25,6 +31,11 @@ class FocusNotification private constructor() {
     } else {
         null
     }
+
+    internal fun createBitmap(
+        key : String,
+        value : Bitmap
+    ) : String? = createParcelable(key, Icon.createWithBitmap(value))
 
     private fun buildPicsBundle() : Bundle = Bundle().apply {
         pics.forEach { (k, v) ->

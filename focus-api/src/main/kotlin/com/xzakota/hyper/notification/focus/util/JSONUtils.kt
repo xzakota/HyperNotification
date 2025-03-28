@@ -4,6 +4,7 @@ import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
+@Suppress("unused")
 internal object JSONUtils {
     @JvmField
     val json = Json {

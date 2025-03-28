@@ -11,7 +11,7 @@
 ### 依赖
 ```kotlin
 dependencies {
-    implementation('com.xzakota.hyper.notification:focus-api:${version}')
+    implementation("com.xzakota.hyper.notification:focus-api:${version}")
 }
 ```
 

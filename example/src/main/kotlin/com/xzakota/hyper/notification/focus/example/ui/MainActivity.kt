@@ -34,11 +34,12 @@ class MainActivity : Activity() {
     }
 
     private fun postFocus(tickerText : String, titleText : String, contentText : String) {
-        if (!areNotificationsEnabled()) {
+        if (!notificationManager.areNotificationsEnabled()) {
             showToast("No notification permission")
             return
         }
 
+        // create channel
         if (notificationManager.getNotificationChannel(ID_FOCUS_CHANNEL) == null) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
@@ -52,8 +53,11 @@ class MainActivity : Activity() {
         }
 
         val intent = packageManager.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID) ?: return
-        val icon = Icon.createWithBitmap(packageManager.getActivityIcon(intent).toBitmap())
+        val iconBitmap = packageManager.getActivityIcon(intent).toBitmap()
+        val icon = Icon.createWithBitmap(iconBitmap)
+        val uri = intent.toUri(Intent.URI_INTENT_SCHEME)
 
+        // build focus bundle
         val extras = FocusNotification.buildV2 {
             enableFloat = true
             ticker = tickerText
@@ -66,23 +70,32 @@ class MainActivity : Activity() {
             }
 
             hintInfo {
-                type = 1
+                type = 2
                 title = titleText + "2"
                 content = contentText + "2"
+
+                actionInfo {
+                    actionTitle = "Action"
+                    actionIntent = uri
+                }
             }
 
             actions {
                 addActionInfo {
                     actionIcon = createParcelable("miui.focus.action_pic", icon)
-                    actionIntent = intent.toUri(Intent.URI_INTENT_SCHEME)
+                    actionIntent = uri
                 }
             }
         }
+
+        // free bitmap
+        iconBitmap.recycle()
 
         if (BuildConfig.DEBUG) {
             Log.d("FocusNotify", extras.toString())
         }
 
+        // notify
         notificationManager.notify(
             ID_FOCUS_CHANNEL.hashCode(),
             Notification.Builder(this, ID_FOCUS_CHANNEL)
@@ -94,8 +107,6 @@ class MainActivity : Activity() {
                 .build()
         )
     }
-
-    private fun areNotificationsEnabled() : Boolean = notificationManager.areNotificationsEnabled()
 
     private fun showToast(massage : CharSequence) = Toast.makeText(this, massage, Toast.LENGTH_SHORT).show()
 

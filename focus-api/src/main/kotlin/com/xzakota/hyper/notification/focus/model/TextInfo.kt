@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.xzakota.hyper.notification.focus.model
 
 import kotlinx.serialization.Serializable
@@ -63,5 +65,3 @@ data class ChatInfo(
     var picProfile : String? = null,
     override var timerInfo : TimerInfo? = null
 ) : TextAndColorInfo(), ITimerInfoCreator
-
-

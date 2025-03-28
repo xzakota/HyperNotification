@@ -41,5 +41,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.hyper.notification.focus.api)
+    // implementation(libs.hyper.notification.focus.api)
+    implementation(project(":focus-api"))
 }
