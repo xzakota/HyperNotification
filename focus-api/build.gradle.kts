@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.xzakota.hyper.notification"
-version = "1.1"
+version = "1.2"
 
 android {
     namespace = "com.xzakota.hyper.notification.focus"
