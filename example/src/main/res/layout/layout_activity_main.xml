@@ -8,8 +8,14 @@
     tools:ignore="HardcodedText">
 
     <Button
-        android:id="@+id/post_notification_button"
+        android:id="@+id/post_focus_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post Focus" />
+
+    <Button
+        android:id="@+id/post_custom_focus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post Custom Focus" />
 </LinearLayout>

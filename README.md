@@ -36,7 +36,7 @@ Bundle extras = FocusNotification.buildV2(template -> {
 });
 
 notificationManager.notify(
-    notificationID,
+    notificationId,
     new Notification.Builder(context, channelId)
         .setSmallIcon(icon)
         .setTicker("Ticker")
@@ -68,7 +68,7 @@ val extras = FocusNotification.buildV2 {
 }
 
 notificationManager.notify(
-    notificationID,
+    notificationId,
     Notification.Builder(context, channelId)
         .setSmallIcon(icon)
         .setTicker("Ticker")
@@ -80,7 +80,7 @@ notificationManager.notify(
 )
 ```
 
-更多使用可参考 [example](https://github.com/xzakota/HyperNotification/tree/main/example/src/main/kotlin/com/xzakota/hyper/notification/focus/example/ui/MainActivity.kt#L63) 模块或浏览源代码
+更多使用可参考 [example](https://github.com/xzakota/HyperNotification/tree/main/example/src/main/kotlin/com/xzakota/hyper/notification/focus/example/ui/MainActivity.kt#L72) 模块或浏览源代码
 
 ### TODO
 - Custom Focus

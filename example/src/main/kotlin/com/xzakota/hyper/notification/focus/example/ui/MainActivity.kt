@@ -10,15 +10,20 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.RemoteViews
 import android.widget.Toast
 import com.xzakota.hyper.notification.focus.FocusNotification
 import com.xzakota.hyper.notification.focus.example.BuildConfig
+import com.xzakota.hyper.notification.focus.example.R
 import com.xzakota.hyper.notification.focus.example.databinding.LayoutActivityMainBinding
 import com.xzakota.hyper.notification.focus.example.extension.toBitmap
+import com.xzakota.hyper.notification.focus.model.CustomFocusTemplate
+import kotlin.random.Random
 
 @Suppress("SameParameterValue")
 @SuppressLint("SetTextI18n")
-class MainActivity : Activity() {
+class MainActivity : Activity(), View.OnClickListener {
     private lateinit var notificationManager : NotificationManager
 
     override fun onCreate(savedInstanceState : Bundle?) {
@@ -29,12 +34,11 @@ class MainActivity : Activity() {
         val binding = LayoutActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.postNotificationButton.setOnClickListener {
-            postFocus("Ticker", "Title", "Content")
-        }
+        binding.postFocusButton.setOnClickListener(this)
+        binding.postCustomFocusButton.setOnClickListener(this)
     }
 
-    private fun postFocus(tickerText : String, titleText : String, contentText : String) {
+    override fun onClick(v : View) {
         if (!notificationManager.areNotificationsEnabled()) {
             showToast("No notification permission")
             return
@@ -53,6 +57,11 @@ class MainActivity : Activity() {
             )
         }
 
+        val tickerText = "Ticker"
+        val titleText = "Title"
+        val contentText = "Content"
+        val random = Random(System.currentTimeMillis()).nextInt()
+
         val intent = packageManager.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID) ?: return
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
         val iconBitmap = packageManager.getActivityIcon(intent).toBitmap()
@@ -60,43 +69,62 @@ class MainActivity : Activity() {
         val uri = intent.toUri(Intent.URI_INTENT_SCHEME)
 
         // build focus bundle
-        val extras = FocusNotification.buildV2 {
-            val logo = createPicture("key_logo", icon)
+        val extras = when (v.id) {
+            R.id.post_focus_button -> FocusNotification.buildV2 {
+                val logo = createPicture("key_logo", icon)
 
-            enableFloat = true
-            ticker = tickerText
-            tickerPic = logo
+                enableFloat = true
+                ticker = tickerText
+                tickerPic = logo
 
-            baseInfo {
-                type = 1
-                title = titleText
-                content = contentText
-            }
+                baseInfo {
+                    type = 1
+                    title = titleText
+                    content = contentText
+                }
 
-            hintInfo {
-                type = 2
-                title = titleText + "2"
-                content = contentText + "2"
+                hintInfo {
+                    type = 2
+                    title = "$random"
+                    content = "Hint $contentText"
 
-                actionInfo {
-                    actionTitle = "Action"
-                    actionIntent = uri
+                    actionInfo {
+                        actionTitle = "Action"
+                        actionIntent = uri
+                    }
+                }
+
+                actions {
+                    addActionInfo {
+                        actionIcon = logo
+                        actionIntent = uri
+                    }
+
+                    addActionInfo {
+                        action = createAction(
+                            "key_action1",
+                            Notification.Action.Builder(icon, null, pendingIntent).build()
+                        )
+                    }
                 }
             }
 
-            actions {
-                addActionInfo {
-                    actionIcon = logo
-                    actionIntent = uri
+            R.id.post_custom_focus_button -> FocusNotification.buildCustomV2 {
+                enableFloat = true
+                ticker = tickerText
+                tickerPic = createPicture("key_logo", icon)
+
+                fun initRemoteViews(key : String, layoutId : Int) {
+                    createRemoteViews(key, RemoteViews(packageName, layoutId).apply {
+                        setTextViewText(R.id.content, "It's a long text.It's a long text.It's a long text. $random")
+                    })
                 }
 
-                addActionInfo {
-                    action = createAction(
-                        "key_action1",
-                        Notification.Action.Builder(icon, null, pendingIntent).build()
-                    )
-                }
+                initRemoteViews(CustomFocusTemplate.LAYOUT, R.layout.layout_focus_custom)
+                initRemoteViews(CustomFocusTemplate.LAYOUT_NIGHT, R.layout.layout_focus_custom_night)
             }
+
+            else -> null
         }
 
         // free bitmap
@@ -108,7 +136,7 @@ class MainActivity : Activity() {
 
         // notify
         notificationManager.notify(
-            ID_FOCUS_CHANNEL.hashCode(),
+            v.id,
             Notification.Builder(this, ID_FOCUS_CHANNEL)
                 .setSmallIcon(icon)
                 .setTicker(tickerText)
