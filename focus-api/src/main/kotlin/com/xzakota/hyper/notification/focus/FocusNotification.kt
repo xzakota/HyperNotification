@@ -25,7 +25,7 @@ class FocusNotification private constructor() {
                 putParcelable(k, v)
             }
         } else {
-            putString("miui.focus.param", JSONUtils.toJSONString(template))
+            putString("miui.focus.param", getParamJSON())
         }
 
         if (pics.isNotEmpty()) {
