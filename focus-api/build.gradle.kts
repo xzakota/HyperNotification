@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 
 plugins {
     id("com.android.library")
@@ -18,11 +19,11 @@ android {
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
-        minSdk = 33
+        minSdk = 27
     }
 
-    buildFeatures {
-        androidResources = false
+    androidResources {
+        enable = false
     }
 
     compileOptions {
@@ -30,13 +31,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.majorVersion
-    }
-
     testOptions.unitTests.all {
         it.useJUnitPlatform()
     }
+}
+
+kotlin {
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
 
 mavenPublishing {
@@ -44,7 +45,7 @@ mavenPublishing {
 
     coordinates(group.toString(), name, version.toString())
 
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+    publishToMavenCentral(true)
     signAllPublications()
 }
 
