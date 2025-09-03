@@ -2,7 +2,6 @@
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -11,7 +10,7 @@ plugins {
 }
 
 group = "com.xzakota.hyper.notification"
-version = "1.2"
+version = "1.3"
 
 android {
     namespace = "com.xzakota.hyper.notification.focus"
