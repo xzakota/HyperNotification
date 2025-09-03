@@ -1,49 +1,29 @@
 @file:Suppress("unused")
 
-package com.xzakota.hyper.notification.focus.model
+package com.xzakota.hyper.notification.focus.template
 
-import android.os.Parcelable
-import android.widget.RemoteViews
-import com.xzakota.hyper.notification.focus.FocusNotification
+import com.xzakota.hyper.notification.focus.model.ActionInfo
+import com.xzakota.hyper.notification.focus.model.BaseInfo
+import com.xzakota.hyper.notification.focus.model.BgInfo
+import com.xzakota.hyper.notification.focus.model.ChatInfo
+import com.xzakota.hyper.notification.focus.model.HighlightInfo
+import com.xzakota.hyper.notification.focus.model.HintInfo
+import com.xzakota.hyper.notification.focus.model.PicInfo
+import com.xzakota.hyper.notification.focus.model.ProgressInfo
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import java.util.function.Consumer
 
 @Serializable
-open class BaseFocusTemplate internal constructor() {
-    var ticker : String? = null
-    var tickerPic : String? = null
-    var tickerPicDark : String? = null
-    var timeout : Int? = null
-    var updatable : Boolean? = null
-    var showSmallIcon : Boolean? = null
-    var enableFloat : Boolean? = null
-    var aodPic : String? = null
-    var aodTitle : String? = null
-    var reopen : String? = null
-
-    @Transient
-    internal var notification : FocusNotification? = null
-
-    internal fun configWith(notification : FocusNotification) {
-        this.notification = notification
-    }
-
-    fun createPicture(key : String, value : Parcelable?) : String? = notification?.createPicture(key, value)
-    fun createAction(key : String, value : Parcelable?) : String? = notification?.createAction(key, value)
-}
-
-@Serializable
-data class FocusTemplate(
-    var baseInfo : BaseInfo? = null,
-    var chatInfo : ChatInfo? = null,
-    var highlightInfo : HighlightInfo? = null,
-    var hintInfo : HintInfo? = null,
-    var progressInfo : ProgressInfo? = null,
-    var picInfo : PicInfo? = null,
-    var bgInfo : BgInfo? = null,
+open class FocusTemplate : BaseFocusTemplate() {
+    var baseInfo : BaseInfo? = null
+    var chatInfo : ChatInfo? = null
+    var highlightInfo : HighlightInfo? = null
+    var hintInfo : HintInfo? = null
+    var progressInfo : ProgressInfo? = null
+    var picInfo : PicInfo? = null
+    var bgInfo : BgInfo? = null
     var actions : ArrayList<ActionInfo>? = null
-) : BaseFocusTemplate() {
+
     fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo {
         consumer.accept(this)
     }
@@ -131,32 +111,5 @@ data class FocusTemplate(
     @JvmSynthetic
     fun ArrayList<ActionInfo>.addActionInfo(block : ActionInfo.() -> Unit) {
         add(ActionInfo().apply(block))
-    }
-}
-
-@Serializable
-class CustomFocusTemplate() : BaseFocusTemplate() {
-    // var filterWhenNoPermission = false
-
-    @Transient
-    internal var rv = mutableMapOf<String, RemoteViews?>()
-
-    fun createRemoteViews(key : String, value : RemoteViews?) {
-        if (value != null) {
-            rv[key] = value
-        }
-    }
-    
-    @Suppress("ClassName")
-    companion object `Companion-Object` {
-        const val LAYOUT = "miui.focus.rv"
-        const val LAYOUT_NIGHT = "miui.focus.rvNight"
-        const val LAYOUT_AOD = "miui.focus.rvAod"
-        const val LAYOUT_FLIP_TINY = "miui.focus.rv.tiny"
-        const val LAYOUT_FLIP_TINY_NIGHT = "miui.focus.rv.tinyNight"
-        const val LAYOUT_DECO_LAND = "miui.focus.rv.deco.land"
-        const val LAYOUT_DECO_LAND_NIGHT = "miui.focus.rv.deco.land.night"
-        const val LAYOUT_DECO_PORT = "miui.focus.rv.deco.port"
-        const val LAYOUT_DECO_PORT_NIGHT = "miui.focus.rv.deco.port.night"
     }
 }

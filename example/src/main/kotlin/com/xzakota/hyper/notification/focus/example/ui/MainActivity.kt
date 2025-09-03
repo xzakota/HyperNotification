@@ -18,7 +18,8 @@ import com.xzakota.hyper.notification.focus.example.BuildConfig
 import com.xzakota.hyper.notification.focus.example.R
 import com.xzakota.hyper.notification.focus.example.databinding.LayoutActivityMainBinding
 import com.xzakota.hyper.notification.focus.example.extension.toBitmap
-import com.xzakota.hyper.notification.focus.model.CustomFocusTemplate
+import com.xzakota.hyper.notification.focus.template.CustomFocusTemplate
+import com.xzakota.hyper.notification.focus.template.CustomFocusTemplateV3
 import kotlin.random.Random
 
 @Suppress("SameParameterValue")
@@ -70,7 +71,7 @@ class MainActivity : Activity(), View.OnClickListener {
 
         // build focus bundle
         val extras = when (v.id) {
-            R.id.post_focus_button -> FocusNotification.buildV2 {
+            R.id.post_focus_button -> FocusNotification.buildV3 {
                 val logo = createPicture("key_logo", icon)
 
                 enableFloat = true
@@ -91,6 +92,33 @@ class MainActivity : Activity(), View.OnClickListener {
                     actionInfo {
                         actionTitle = "Action"
                         actionIntent = uri
+                    }
+                }
+
+                isShowNotification = false
+                island {
+                    islandProperty = 1
+                    bigIslandArea {
+                        imageTextInfoLeft {
+                            type = 1
+                            picInfo {
+                                type = 1
+                                pic = logo
+                            }
+                        }
+
+                        imageTextInfoRight {
+                            type = 2
+                            textInfo {
+                                title = titleText
+                            }
+                        }
+                    }
+
+                    shareData {
+                        title = titleText
+                        content = contentText
+                        shareContent = contentText
                     }
                 }
 
@@ -122,6 +150,7 @@ class MainActivity : Activity(), View.OnClickListener {
 
                 initRemoteViews(CustomFocusTemplate.LAYOUT, R.layout.layout_focus_custom)
                 initRemoteViews(CustomFocusTemplate.LAYOUT_NIGHT, R.layout.layout_focus_custom_night)
+                initRemoteViews(CustomFocusTemplateV3.LAYOUT_ISLAND_EXPAND, R.layout.layout_focus_custom_night)
             }
 
             else -> null

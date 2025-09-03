@@ -4,8 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Suppress("unused")
 @Serializable
-class BgInfo {
+class IconTextInfo : TextAndColorInfo(), IAnimIconInfoCreator {
     var type : Int? = null
-    var colorBg : String? = null
-    var picBg : String? = null
+    override var animIconInfo : AnimIconInfo? = null
 }

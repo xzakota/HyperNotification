@@ -4,8 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Suppress("unused")
 @Serializable
-class BgInfo {
-    var type : Int? = null
-    var colorBg : String? = null
-    var picBg : String? = null
+class CoverInfo : TextAndColorInfo() {
+    var picCover : String? = null
 }

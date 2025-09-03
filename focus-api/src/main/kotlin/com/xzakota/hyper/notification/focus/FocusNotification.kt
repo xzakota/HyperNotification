@@ -2,8 +2,10 @@ package com.xzakota.hyper.notification.focus
 
 import android.os.Bundle
 import android.os.Parcelable
-import com.xzakota.hyper.notification.focus.model.CustomFocusTemplate
-import com.xzakota.hyper.notification.focus.model.FocusTemplate
+import com.xzakota.hyper.notification.focus.template.CustomFocusTemplate
+import com.xzakota.hyper.notification.focus.template.CustomFocusTemplateV3
+import com.xzakota.hyper.notification.focus.template.FocusTemplate
+import com.xzakota.hyper.notification.focus.template.FocusTemplateV3
 import com.xzakota.hyper.notification.focus.util.JSONUtils
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -11,7 +13,7 @@ import java.util.function.Consumer
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class FocusNotification private constructor() {
-    private lateinit var template : FocusParam
+    private lateinit var template : FocusTemplate
     private var focusVersion = -1
     private var isCustomFocus = false
     private val pics = mutableMapOf<String, Parcelable?>()
@@ -19,7 +21,7 @@ class FocusNotification private constructor() {
 
     fun buildBundle() : Bundle = Bundle().apply {
         if (isCustomFocus) {
-            val param = (template as FocusParam.CustomV2).param
+            val param = (template as FocusTemplate.CustomV2).param
             putString("miui.focus.param.custom", JSONUtils.toJSONString(param))
             param.rv.forEach { (k, v) ->
                 putParcelable(k, v)
@@ -65,32 +67,6 @@ class FocusNotification private constructor() {
         }
     }
 
-    private fun paramV2(consumer : Consumer<FocusTemplate>) = paramV2 {
-        consumer.accept(this)
-    }
-
-    private inline fun paramV2(crossinline block : FocusTemplate.() -> Unit) {
-        focusVersion = 2
-        isCustomFocus = false
-        template = FocusParam.V2(
-            FocusTemplate().apply {
-                configWith(this@FocusNotification)
-                block()
-            }
-        )
-    }
-
-    private inline fun customParamV2(crossinline block : CustomFocusTemplate.() -> Unit) {
-        focusVersion = 2
-        isCustomFocus = true
-        template = FocusParam.CustomV2(
-            CustomFocusTemplate().apply {
-                configWith(this@FocusNotification)
-                block()
-            }
-        )
-    }
-
     override fun toString() : String = "param => ${getParamJSON()}, pics(${pics.size}) => ${pics.keys}"
 
     @Suppress("ClassName")
@@ -100,33 +76,87 @@ class FocusNotification private constructor() {
          * ==================================================== */
 
         @JvmStatic
-        fun createV2(consumer : Consumer<FocusTemplate>) : FocusNotification = FocusNotification().apply {
-            paramV2(consumer)
+        fun createV2(consumer : Consumer<com.xzakota.hyper.notification.focus.template.FocusTemplate>) : FocusNotification = createV2 {
+            consumer.accept(this)
         }
 
         @JvmSynthetic
-        fun createV2(block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
-            paramV2(block)
+        fun createV2(block : com.xzakota.hyper.notification.focus.template.FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
+            focusVersion = 2
+            isCustomFocus = false
+            template = FocusTemplate.V2(
+                FocusTemplate().also {
+                    it.configWith(this)
+                    it.block()
+                }
+            )
         }
 
         @JvmStatic
-        fun buildV2(consumer : Consumer<FocusTemplate>) : Bundle = createV2(consumer).buildBundle()
+        fun createV3(consumer : Consumer<FocusTemplateV3>) : FocusNotification = createV3 {
+            consumer.accept(this)
+        }
 
         @JvmSynthetic
-        fun buildV2(block : FocusTemplate.() -> Unit) : Bundle = createV2(block).buildBundle()
+        fun createV3(block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
+            focusVersion = 3
+            isCustomFocus = false
+            template = FocusTemplate.V3(
+                FocusTemplateV3().also {
+                    it.configWith(this)
+                    it.block()
+                }
+            )
+        }
+
+        @JvmStatic
+        fun buildV2(consumer : Consumer<com.xzakota.hyper.notification.focus.template.FocusTemplate>) : Bundle = createV2(consumer).buildBundle()
+
+        @JvmSynthetic
+        fun buildV2(block : com.xzakota.hyper.notification.focus.template.FocusTemplate.() -> Unit) : Bundle = createV2(block).buildBundle()
+
+        @JvmStatic
+        fun buildV3(consumer : Consumer<FocusTemplateV3>) : Bundle = createV3(consumer).buildBundle()
+
+        @JvmSynthetic
+        fun buildV3(block : FocusTemplateV3.() -> Unit) : Bundle = createV3(block).buildBundle()
 
         /* ====================================================
          * for custom focus style
          * ==================================================== */
 
         @JvmStatic
-        fun createCustomV2(consumer : Consumer<CustomFocusTemplate>) : FocusNotification = FocusNotification().apply {
-            createCustomV2(consumer)
+        fun createCustomV2(consumer : Consumer<CustomFocusTemplate>) : FocusNotification = createCustomV2 {
+            consumer.accept(this)
         }
 
         @JvmSynthetic
         fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
-            customParamV2(block)
+            focusVersion = 3
+            isCustomFocus = true
+            template = FocusTemplate.CustomV2(
+                CustomFocusTemplate().also {
+                    it.configWith(this)
+                    it.block()
+                }
+            )
+        }
+
+        @JvmStatic
+        fun createCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : FocusNotification = createCustomV3 {
+            consumer.accept(this)
+        }
+
+        @JvmSynthetic
+        fun createCustomV3(block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
+            focusVersion = 3
+            isCustomFocus = true
+            template = FocusTemplate.CustomV3(
+                CustomFocusTemplateV3().also {
+                    it.configWith(this)
+                    it.block()
+                }
+            )
         }
 
         @JvmStatic
@@ -134,14 +164,26 @@ class FocusNotification private constructor() {
 
         @JvmSynthetic
         fun buildCustomV2(block : CustomFocusTemplate.() -> Unit) : Bundle = createCustomV2(block).buildBundle()
+
+        @JvmStatic
+        fun buildCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : Bundle = createCustomV3(consumer).buildBundle()
+
+        @JvmSynthetic
+        fun buildCustomV3(block : CustomFocusTemplateV3.() -> Unit) : Bundle = createCustomV3(block).buildBundle()
     }
 
     @Serializable
-    internal sealed class FocusParam {
+    internal sealed class FocusTemplate {
         @Serializable
-        class V2(@SerialName("param_v2") val param : FocusTemplate) : FocusParam()
+        class V2(@SerialName("param_v2") val param : com.xzakota.hyper.notification.focus.template.FocusTemplate) : FocusTemplate()
 
         @Serializable
-        class CustomV2(val param : CustomFocusTemplate) : FocusParam()
+        class V3(@SerialName("param_v2") val param : FocusTemplateV3) : FocusTemplate()
+
+        @Serializable
+        class CustomV2(val param : CustomFocusTemplate) : FocusTemplate()
+
+        @Serializable
+        class CustomV3(val param : CustomFocusTemplateV3) : FocusTemplate()
     }
 }
