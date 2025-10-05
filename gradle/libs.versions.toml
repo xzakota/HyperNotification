@@ -1,13 +1,14 @@
 [versions]
-kotlin = "2.2.10"
-agp = "8.12.2"
-junit5 = "5.11.2"
+kotlin = "2.2.20"
+agp = "8.13.0"
+junit6 = "6.0.0"
 
 [libraries]
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
 
-junit-bom = { module = "org.junit:junit-bom", version.ref = "junit5" }
-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit5" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit6" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-laucher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "agp" }
