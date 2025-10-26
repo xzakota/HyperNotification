@@ -37,6 +37,11 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
     @SerialName("param_island")
     override var island : IslandTemplate? = null
 
+    override fun copyFrom(from : Any) {
+        super.copyFrom(from)
+        reflectCollect(from, FocusTemplateV3::class.java)
+    }
+
     fun highlightInfoV3(consumer : Consumer<HighlightInfoV3>) = highlightInfoV3 {
         consumer.accept(this)
     }

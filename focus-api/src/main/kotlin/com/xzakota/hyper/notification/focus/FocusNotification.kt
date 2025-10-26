@@ -41,18 +41,12 @@ class FocusNotification private constructor() {
 
     fun getParamJSON() : String = JSONUtils.toJSONString(factory)
 
-    internal fun createPicture(key : String, value : Parcelable?) : String? = if (value != null) {
-        pics[key] = value
-        key
-    } else {
-        null
+    internal fun createPicture(key : String, value : Parcelable) : String = key.also {
+        pics[it] = value
     }
 
-    internal fun createAction(key : String, value : Parcelable?) : String? = if (value != null) {
-        actions[key] = value
-        key
-    } else {
-        null
+    internal fun createAction(key : String, value : Parcelable) : String = key.also {
+        actions[it] = value
     }
 
     private fun buildPicsBundle() : Bundle = Bundle().apply {

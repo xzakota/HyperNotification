@@ -22,6 +22,11 @@ class CustomFocusTemplateV3 : CustomFocusTemplate(), IExtraV3Param, IIslandTempl
     @SerialName("param_island")
     override var island : IslandTemplate? = null
 
+    override fun copyFrom(from : Any) {
+        super.copyFrom(from)
+        reflectCollect(from, CustomFocusTemplateV3::class.java)
+    }
+
     @Suppress("ClassName")
     companion object `Companion-Object` {
         const val LAYOUT_ISLAND_EXPAND = "miui.focus.rv.island.expand"

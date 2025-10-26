@@ -6,6 +6,7 @@ import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.FocusNotification
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import java.lang.reflect.Modifier
 
 @Serializable
 open class BaseFocusTemplate internal constructor() {
@@ -21,14 +22,36 @@ open class BaseFocusTemplate internal constructor() {
     var reopen : String? = null
 
     @Transient
-    internal var notification : FocusNotification? = null
+    internal lateinit var notification : FocusNotification
 
     internal fun configWith(notification : FocusNotification) {
         this.notification = notification
     }
 
-    fun createPicture(key : String, value : Parcelable?) : String? = notification?.createPicture(key, value)
-    fun createAction(key : String, value : Parcelable?) : String? = notification?.createAction(key, value)
+    fun createPicture(key : String, value : Parcelable) : String = notification.createPicture(key, value)
+    fun createAction(key : String, value : Parcelable) : String = notification.createAction(key, value)
+
+    open fun copyFrom(from: Any) {
+        reflectCollect(from, BaseFocusTemplate::class.java)
+    }
+
+    protected fun reflectCollect(from: Any, clazz : Class<*>) {
+        if (javaClass != clazz && !javaClass.isInstance(from)) {
+            return
+        }
+
+        clazz.declaredFields.forEach {
+            if (Modifier.isStatic(it.modifiers)) {
+                return@forEach
+            }
+
+            it.isAccessible = true
+            val obj = it.get(from)
+            if (obj != null) {
+                it.set(this, obj)
+            }
+        }
+    }
 }
 
 internal interface IExtraV3Param {

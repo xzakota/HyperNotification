@@ -24,6 +24,11 @@ open class FocusTemplate : BaseFocusTemplate() {
     var bgInfo : BgInfo? = null
     var actions : ArrayList<ActionInfo>? = null
 
+    override fun copyFrom(from : Any) {
+        super.copyFrom(from)
+        reflectCollect(from, FocusTemplate::class.java)
+    }
+
     fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo {
         consumer.accept(this)
     }

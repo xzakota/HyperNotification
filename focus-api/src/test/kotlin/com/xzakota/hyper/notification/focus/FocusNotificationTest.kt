@@ -1,5 +1,7 @@
 package com.xzakota.hyper.notification.focus
 
+import com.xzakota.hyper.notification.focus.template.FocusTemplateV3
+import com.xzakota.hyper.notification.focus.util.JSONUtils
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -7,8 +9,10 @@ class FocusNotificationTest {
     @Test
     fun paramV2Test() {
         val config = FocusNotification.createV3 {
+            copyFrom(JSONUtils.parseObject<FocusTemplateV3>("{\"isShowNotification\": true, \"timeout\": 1}"))
+            Assertions.assertNotEquals(false, isShowNotification)
+
             enableFloat = true
-            isShowNotification = true
             islandFirstFloat = false
             ticker = "Ticker"
 
