@@ -8,6 +8,8 @@
 
 注：澎湃 OS 对于焦点通知有白名单应用限制，使用前请先安装无视白名单的 XP 模块。
 
+[小米官方开发指南](https://dev.mi.com/xiaomihyperos/documentation/detail?pId=2131)
+
 ### 依赖
 ```kotlin
 dependencies {

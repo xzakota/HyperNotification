@@ -7,17 +7,25 @@ import java.util.function.Consumer
 
 @Serializable
 class PicInfo {
+    /**
+     * 图⽚类型
+     * - `0` (默认值) 静态图⽚
+     */
     var type : Int? = null
-    var number : Int? = null
-    var autoplay : Boolean? = null
-    var loop : Boolean? = null
-    var pic : String? = null
+
     var contentDescription : String? = null
+    var number : Int? = null
+    var pic : String? = null
     var effectSrc : String? = null
     var effectColor : String? = null
+    var autoplay : Boolean? = null
+    var loop : Boolean? = null
 }
 
 internal interface IPicInfoCreator {
+    /**
+     * 图标属性参数
+     */
     var picInfo : PicInfo?
 
     fun picInfo(consumer : Consumer<PicInfo>) = picInfo {

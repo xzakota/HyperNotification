@@ -15,13 +15,44 @@ import java.util.function.Consumer
 
 @Serializable
 open class FocusTemplate : BaseFocusTemplate() {
+    /**
+     * 文本组件
+     */
     var baseInfo : BaseInfo? = null
+
+    /**
+     * 图文组件
+     */
     var chatInfo : ChatInfo? = null
+
+    /**
+     * 强调图⽂组件
+     */
     var highlightInfo : HighlightInfo? = null
+
+    /**
+     * 按钮组件
+     */
     var hintInfo : HintInfo? = null
+
+    /**
+     * 进度组件
+     */
     var progressInfo : ProgressInfo? = null
+
+    /**
+     * 识别图形组件
+     */
     var picInfo : PicInfo? = null
+
+    /**
+     * 模板背景
+     */
     var bgInfo : BgInfo? = null
+
+    /**
+     * 按钮组件
+     */
     var actions : ArrayList<ActionInfo>? = null
 
     override fun copyFrom(from : Any) {

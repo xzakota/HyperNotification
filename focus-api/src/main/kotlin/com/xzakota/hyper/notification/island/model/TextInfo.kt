@@ -7,16 +7,40 @@ import java.util.function.Consumer
 
 @Serializable
 class TextInfo {
+    /**
+     * ⼤字
+     */
     var title : String? = null
+
+    /**
+     * 前置⼩字
+     */
     var frontTitle : String? = null
+
+    /**
+     * 后置⼩字
+     */
     var content : String? = null
-    var isTitleDigit : Boolean? = null
-    var turnAnim : Boolean? = null
+
+    /**
+     * 是否使⽤强调⾊
+     */
     var showHighlightColor : Boolean? = null
+
+    /**
+     * 是否使⽤窄字体
+     */
     var narrowFont : Boolean? = null
+
+    var isTitleDigit : Boolean? = null
+
+    var turnAnim : Boolean? = null
 }
 
 internal interface ITextInfoCreator {
+    /**
+     * 文本属性参数
+     */
     var textInfo : TextInfo?
 
     fun textInfo(consumer : Consumer<TextInfo>) = textInfo {

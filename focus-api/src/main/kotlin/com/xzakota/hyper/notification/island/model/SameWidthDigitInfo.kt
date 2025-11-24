@@ -4,12 +4,7 @@ import com.xzakota.hyper.notification.common.model.ITimerInfoCreator
 import com.xzakota.hyper.notification.common.model.TimerInfo
 import kotlinx.serialization.Serializable
 
-@Suppress("unused")
 @Serializable
-class SameWidthDigitInfo : ITimerInfoCreator {
-    var timerType : String? = null
-    var digit : String? = null
-    var turnAnim : Boolean? = null
-    var showHighlightColor : Boolean? = null
+class SameWidthDigitInfo : DigitInfo(), ITimerInfoCreator {
     override var timerInfo : TimerInfo? = null
 }

@@ -16,22 +16,45 @@ import java.util.function.Consumer
 
 @Serializable
 class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
-    override var sequence : Long? = null
     override var cancel : Boolean? = null
-    override var hideDeco : Boolean? = null
     override var isShowNotification : Boolean? = null
     override var islandFirstFloat : Boolean? = null
-    override var notifyId : String? = null
-    override var orderId : String? = null
+    override var hideDeco : Boolean? = null
     override var outEffectColor : String? = null
     override var outEffectSrc : String? = null
+    override var sequence : Long? = null
     override var business : String? = null
+    override var notifyId : String? = null
+    override var orderId : String? = null
 
+    /**
+     * 封⾯组件
+     */
     var coverInfo : CoverInfo? = null
+
+    /**
+     * 按钮组件
+     */
     var highlightInfoV3 : HighlightInfoV3? = null
+
+    /**
+     * 图⽂组件
+     */
     var iconTextInfo : IconTextInfo? = null
+
+    /**
+     * 进度组件
+     */
     var multiProgressInfo : MultiProgressInfo? = null
+
+    /**
+     * 动画⽂本组件
+     */
     var animTextInfo : AnimTextInfo? = null
+
+    /**
+     * 按钮组件
+     */
     var textButton : ArrayList<ActionInfo>? = null
 
     @SerialName("param_island")

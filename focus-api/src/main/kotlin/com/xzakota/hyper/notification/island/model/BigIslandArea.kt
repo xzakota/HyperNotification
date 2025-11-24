@@ -8,10 +8,30 @@ import java.util.function.Consumer
 class BigIslandArea {
     var textInfo : TextInfo? = null
     var picInfo : PicInfo? = null
+
+    /**
+     * 左图⽂组件
+     */
     var imageTextInfoLeft : ImageTextInfo? = null
+
+    /**
+     * 右图⽂组件
+     */
     var imageTextInfoRight : ImageTextInfo? = null
+
+    /**
+     * 进度⽂本组件
+     */
     var progressTextInfo : ProgressTextInfo? = null
+
+    /**
+     * 定宽数字⽂本组件
+     */
     var fixedWidthDigitInfo : FixedWidthDigitInfo? = null
+
+    /**
+     * 等宽数字⽂本组件
+     */
     var sameWidthDigitInfo : SameWidthDigitInfo? = null
 
     fun imageTextInfoLeft(consumer : Consumer<ImageTextInfo>) = imageTextInfoLeft {

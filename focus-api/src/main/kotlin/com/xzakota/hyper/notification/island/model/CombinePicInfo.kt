@@ -6,8 +6,12 @@ import java.util.function.Consumer
 @Suppress("unused")
 @Serializable
 class CombinePicInfo : IPicInfoCreator, IProgressInfoCreator {
-    override var picInfo : PicInfo? = null
+    /**
+     * ⼩图标
+     */
     var smallPicInfo : PicInfo? = null
+
+    override var picInfo : PicInfo? = null
     override var progressInfo : ProgressInfo? = null
 
     fun smallPicInfo(consumer : Consumer<PicInfo>) = smallPicInfo {
