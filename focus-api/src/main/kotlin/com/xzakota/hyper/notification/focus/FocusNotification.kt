@@ -126,7 +126,7 @@ class FocusNotification private constructor() {
 
         @JvmSynthetic
         fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
-            focusVersion = 3
+            focusVersion = 2
             isCustomFocus = true
             factory = FocusTemplateFactory.CustomV2(
                 CustomFocusTemplate().also {
