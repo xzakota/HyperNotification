@@ -11,9 +11,9 @@ class ActionInfo : IProgressInfoCreator {
      * 按钮类型
      * - `0` (默认值) 圆形按钮类型
      * - `1` 进度按钮类型
-     * - `2` ⽂字按钮类型
+     * - `2` 文字按钮类型
      */
-    var type: Int? = null
+    var type : Int? = null
 
     /**
      * 从 createAction 创建的 action
@@ -21,7 +21,7 @@ class ActionInfo : IProgressInfoCreator {
     var action : String? = null
 
     /**
-     * ⾃定义构建 action
+     * 自定义构建 action
      */
     var actionIntent : String? = null
 
@@ -42,9 +42,9 @@ class ActionInfo : IProgressInfoCreator {
     var actionBgColorDark : String? = null
 
     /**
-     * 点击是否收起⾯板
-     * - 1. Action 的 PendingIntent 是 Activity 类型, 默认点击收起
-     * - 2. actionIntentType 为 1 时, 默认点击收起
+     * 点击是否收起面板
+     * 1. Action 的 PendingIntent 是 Activity 类型, 默认点击收起
+     * 2. actionIntentType 为 1 时, 默认点击收起
      */
     var clickWithCollapse : Boolean? = null
 

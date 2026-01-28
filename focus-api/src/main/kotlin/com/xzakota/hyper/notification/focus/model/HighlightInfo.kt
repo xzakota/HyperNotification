@@ -8,9 +8,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 class HighlightInfo : TextAndColorInfo(), ITimerInfoCreator {
     /**
-     * ⽂本组件类型
+     * 文本组件类型
      * - `0` 显示次要文本
-     * - `1` 隐藏次要⽂本
+     * - `1` 隐藏次要文本
      */
     var type : Int? = null
 

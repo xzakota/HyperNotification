@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 class HighlightInfoV3 : TextAndColorInfo(), IActionInfoCreator {
     /**
-     * ⽂字标签
+     * 文字标签
      */
     var highLightText : String? = null
     var highLightTextColor : String? = null
@@ -15,21 +15,21 @@ class HighlightInfoV3 : TextAndColorInfo(), IActionInfoCreator {
     var highLightbgColorDark : String? = null
 
     /**
-     * ⾼亮⽂本
+     * 高亮文本
      */
     var primaryColor : String? = null
     var primaryColorDark : String? = null
     var primaryText : String? = null
 
     /**
-     * 补充⽂本
+     * 补充文本
      */
     var secondaryColor : String? = null
     var secondaryColorDark : String? = null
     var secondaryText : String? = null
 
     /**
-     * 补充⽂本是否划线
+     * 补充文本是否划线
      */
     var showSecondaryLine : Boolean? = null
 

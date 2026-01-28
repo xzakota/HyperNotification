@@ -11,12 +11,13 @@ class MultiProgressInfo : TextAndColorInfo() {
     var progress : Int? = null
 
     /**
-     * 进度条颜⾊
+     * 进度条颜色
      */
     var color : String? = null
 
     /**
-     * 节点数量(0 - 4)
+     * 节点数量
+     * - 范围: 0 ~ 4
      */
     var points : Int? = null
 }

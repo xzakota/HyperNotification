@@ -49,7 +49,7 @@ class IslandTemplate {
     var business : String? = null
 
     /**
-     * 文字本强调色
+     * 文本强调色
      */
     var highlightColor : String? = null
 

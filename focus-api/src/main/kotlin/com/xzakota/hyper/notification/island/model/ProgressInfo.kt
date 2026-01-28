@@ -14,18 +14,18 @@ class ProgressInfo {
 
     /**
      * 进度条的起始位置
-     * - `false` (默认值, 3 点钟⽅向) 0 度为起始位置
-     * - `true` (12 点钟⽅向) 270 度为起始位置
+     * - `false` (默认值, 3 点钟方向) 0 度为起始位置
+     * - `true` (12 点钟方向) 270 度为起始位置
      */
     var isCCW : Boolean? = null
 
     /**
-     * 当前进度的颜⾊
+     * 当前进度的颜色
      */
     var colorReach : String? = null
 
     /**
-     * 当前未到进度的颜⾊
+     * 当前未到进度的颜色
      */
     var colorUnReach : String? = null
 }

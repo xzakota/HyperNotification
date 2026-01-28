@@ -13,22 +13,22 @@ class TextInfo {
     var title : String? = null
 
     /**
-     * 前置⼩字
+     * 前置小字
      */
     var frontTitle : String? = null
 
     /**
-     * 后置⼩字
+     * 后置小字
      */
     var content : String? = null
 
     /**
-     * 是否使⽤强调⾊
+     * 是否使用强调色
      */
     var showHighlightColor : Boolean? = null
 
     /**
-     * 是否使⽤窄字体
+     * 是否使用窄字体
      */
     var narrowFont : Boolean? = null
 

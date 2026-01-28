@@ -7,7 +7,7 @@ import java.util.function.Consumer
 @Serializable
 class CombinePicInfo : IPicInfoCreator, IProgressInfoCreator {
     /**
-     * ⼩图标
+     * 小图标
      */
     var smallPicInfo : PicInfo? = null
 

@@ -26,7 +26,7 @@ open class FocusTemplate : BaseFocusTemplate() {
     var chatInfo : ChatInfo? = null
 
     /**
-     * 强调图⽂组件
+     * 强调图文组件
      */
     var highlightInfo : HighlightInfo? = null
 

@@ -10,27 +10,27 @@ class BigIslandArea {
     var picInfo : PicInfo? = null
 
     /**
-     * 左图⽂组件
+     * 左图文组件
      */
     var imageTextInfoLeft : ImageTextInfo? = null
 
     /**
-     * 右图⽂组件
+     * 右图文组件
      */
     var imageTextInfoRight : ImageTextInfo? = null
 
     /**
-     * 进度⽂本组件
+     * 进度文本组件
      */
     var progressTextInfo : ProgressTextInfo? = null
 
     /**
-     * 定宽数字⽂本组件
+     * 定宽数字文本组件
      */
     var fixedWidthDigitInfo : FixedWidthDigitInfo? = null
 
     /**
-     * 等宽数字⽂本组件
+     * 等宽数字文本组件
      */
     var sameWidthDigitInfo : SameWidthDigitInfo? = null
 

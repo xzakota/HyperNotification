@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 class ImageTextInfo : ITextInfoCreator, IPicInfoCreator, IProgressInfoCreator {
     /**
-     * 图⽂组件类型
+     * 图文组件类型
      * - `1`
      * - `2`
      * - `3`

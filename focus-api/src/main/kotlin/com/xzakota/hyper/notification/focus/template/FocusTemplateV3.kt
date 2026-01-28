@@ -28,7 +28,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
     override var orderId : String? = null
 
     /**
-     * 封⾯组件
+     * 封面组件
      */
     var coverInfo : CoverInfo? = null
 
@@ -38,7 +38,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
     var highlightInfoV3 : HighlightInfoV3? = null
 
     /**
-     * 图⽂组件
+     * 图文组件
      */
     var iconTextInfo : IconTextInfo? = null
 
@@ -48,7 +48,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
     var multiProgressInfo : MultiProgressInfo? = null
 
     /**
-     * 动画⽂本组件
+     * 动画文本组件
      */
     var animTextInfo : AnimTextInfo? = null
 

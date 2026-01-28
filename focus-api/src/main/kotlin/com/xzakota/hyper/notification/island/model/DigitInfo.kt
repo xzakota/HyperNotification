@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 abstract class DigitInfo {
     /**
-     * ⼩字
+     * 小字
      */
     var content : String? = null
 
@@ -16,7 +16,7 @@ abstract class DigitInfo {
     var digit : String? = null
 
     /**
-     * 是否使⽤强调⾊
+     * 是否使用强调色
      */
     var showHighlightColor : Boolean? = null
 

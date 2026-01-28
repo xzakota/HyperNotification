@@ -8,17 +8,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 class ChatInfo : TextAndColorInfo(), ITimerInfoCreator {
     /**
-     * 浅色模式头像类⼩图
+     * 浅色模式头像类小图
      */
     var picProfile : String? = null
 
     /**
-     * 深色模式头像类⼩图
+     * 深色模式头像类小图
      */
     var picProfileDark : String? = null
 
     /**
-     * ⾃定义应⽤图标
+     * 自定义应用图标
      */
     var appIconPkg : String? = null
 

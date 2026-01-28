@@ -6,19 +6,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 class BaseInfo : TextAndColorInfo() {
     /**
-     * ⽂本组件类型
+     * 文本组件类型
      * - `1` 主要文本在前
      * - `2` 次要文本在前
      */
     var type : Int? = null
 
     /**
-     * 是否显⽰次要⽂本间的分割符
+     * 是否显示次要文本间的分割符
      */
     var showDivider : Boolean? = null
 
     /**
-     * 是否显⽰次要⽂本和功能图标的分割符
+     * 是否显示次要文本和功能图标的分割符
      */
     var showContentDivider : Boolean? = null
 

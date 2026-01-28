@@ -20,12 +20,12 @@ class HintInfo : TextAndColorInfo(), ITimerInfoCreator, IActionInfoCreator {
     var titleLineCount : Int? = null
 
     /**
-     * 图⽂特殊标签背景⾊
+     * 图文特殊标签背景色
      */
     var colorContentBg : String? = null
 
     /**
-     * 图⽂特殊标签图标
+     * 图文特殊标签图标
      */
     var picContent : String? = null
 

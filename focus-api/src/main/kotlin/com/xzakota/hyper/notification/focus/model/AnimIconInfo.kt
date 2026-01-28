@@ -8,8 +8,10 @@ import java.util.function.Consumer
 @Serializable
 class AnimIconInfo : TextAndColorInfo() {
     /**
-     * 图⽚类型
-     * - `0` (默认值) 静态图⽚
+     * 类型
+     * - `0` (默认值) 静态图
+     * - `1`
+     * - `2`
      */
     var type : Int? = null
 

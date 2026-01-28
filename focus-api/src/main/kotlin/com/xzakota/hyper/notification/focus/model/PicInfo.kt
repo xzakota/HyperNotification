@@ -6,21 +6,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 class PicInfo : IActionInfoCreator {
     /**
-     * 识别图形组件类型
-     * - `1` appIcon
-     * - `2` middle, 需设置 pic 属性
-     * - `3` large, 需设置 pic 属性
-     * - `5` 倒计时
+     * 类型
+     * - `0` (默认值) 静态图
      */
-    var type : Int = 0
+    var type : Int? = null
 
     /**
-     * 浅色模式 应⽤图标/功能图标/图⽚
+     * 浅色模式 的 应用图标/功能图标/图片
      */
     var pic : String? = null
 
     /**
-     * 深色模式 应⽤图标/功能图标/图⽚
+     * 深色模式 的 应用图标/功能图标/图片
      */
     var picDark : String? = null
 

@@ -27,7 +27,7 @@ abstract class TextAndColorInfo {
     var colorExtraTitleDark : String? = null
 
     /**
-     * 需要强调的特殊⽂字标签
+     * 需要强调的特殊文字标签
      */
     var specialTitle : String? = null
     var colorSpecialTitle : String? = null
@@ -35,14 +35,14 @@ abstract class TextAndColorInfo {
     var colorSpecialBg : String? = null
 
     /**
-     * 当前状况的前置描述(次要⽂本 1)
+     * 当前状况的前置描述(次要文本 1)
      */
     var content : String? = null
     var colorContent : String? = null
     var colorContentDark : String? = null
 
     /**
-     * 当前状况的前置描述(次要⽂本 2)
+     * 当前状况的前置描述(次要文本 2)
      */
     var subContent : String? = null
     var colorSubContent : String? = null

@@ -71,7 +71,7 @@ open class BaseFocusTemplate internal constructor() {
      * - `false`: (默认值) 通知正常显示不被过滤
      * - `true`: 通知后被过滤, 不显示
      */
-    var filterWhenNoPermission: Boolean? = null
+    var filterWhenNoPermission : Boolean? = null
 
     @Transient
     internal lateinit var notification : FocusNotification
@@ -83,11 +83,11 @@ open class BaseFocusTemplate internal constructor() {
     fun createPicture(key : String, value : Parcelable) : String = notification.createPicture(key, value)
     fun createAction(key : String, value : Parcelable) : String = notification.createAction(key, value)
 
-    open fun copyFrom(from: Any) {
+    open fun copyFrom(from : Any) {
         reflectCollect(from, BaseFocusTemplate::class.java)
     }
 
-    protected fun reflectCollect(from: Any, clazz : Class<*>) {
+    protected fun reflectCollect(from : Any, clazz : Class<*>) {
         if (javaClass != clazz && !javaClass.isInstance(from)) {
             return
         }
@@ -108,8 +108,7 @@ open class BaseFocusTemplate internal constructor() {
 
 internal interface IExtraV3Param {
     /**
-     * 是否直接结束通知
-     * 针对 mipush, 值为 true 时, 触发移除通知
+     * 是否直接结束通知, 针对 mipush, 值为 true 时, 触发移除通知
      */
     var cancel : Boolean?
 

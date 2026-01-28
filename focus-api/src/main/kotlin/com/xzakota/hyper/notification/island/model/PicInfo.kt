@@ -8,8 +8,13 @@ import java.util.function.Consumer
 @Serializable
 class PicInfo {
     /**
-     * 图⽚类型
-     * - `0` (默认值) 静态图⽚
+     * 类型
+     * - `0` (默认值) 静态图
+     * - `1`
+     * - `2`
+     * - `3`
+     * - `4`
+     * - `5`
      */
     var type : Int? = null
 

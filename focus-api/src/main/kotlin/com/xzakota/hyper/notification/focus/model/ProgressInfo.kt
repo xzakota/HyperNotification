@@ -12,12 +12,12 @@ class ProgressInfo {
     var progress : Int? = null
 
     /**
-     * 进度条起始颜⾊
+     * 进度条起始颜色
      */
     var colorProgress : String? = null
 
     /**
-     * 进度条结束颜⾊
+     * 进度条结束颜色
      */
     var colorProgressEnd : String? = null
 
@@ -39,14 +39,14 @@ class ProgressInfo {
     var picMiddleUnselected : String? = null
 
     /**
-     * ⽬标点图标(进度通过)
-     * - 位置: 与进度条右对⻬
+     * 目标点图标(进度通过)
+     * - 位置: 与进度条右对齐
      */
     var picEnd : String? = null
 
     /**
-     * ⽬标点图标(进度未通过)
-     * - 位置: 与进度条右对⻬
+     * 目标点图标(进度未通过)
+     * - 位置: 与进度条右对齐
      */
     var picEndUnselected : String? = null
 }

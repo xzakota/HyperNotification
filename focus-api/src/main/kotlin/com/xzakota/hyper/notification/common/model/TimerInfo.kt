@@ -11,14 +11,15 @@ class TimerInfo {
      * 计时类型, 若设置 0, 则需设置相同位置上的标题
      * - `-2` 倒计时暂停
      * - `-1` 倒计时开始
-     * - `0` 默认值
-     * - `1` 正计时开始
-     * - `2` 正计时暂停
+     * - ` 0` (默认值)
+     * - ` 1` 正计时开始
+     * - ` 2` 正计时暂停
      */
     var timerType : Int? = null
 
     /**
-     * 计时起点(毫秒的时间戳)
+     * 计时起点
+     * - 单位: 毫秒的时间戳
      */
     var timerWhen : Long? = null
 
@@ -28,7 +29,8 @@ class TimerInfo {
     var timerTotal : Long? = null
 
     /**
-     * 计时误差(毫秒的时间戳)
+     * 计时误差
+     * - 单位: 毫秒的时间戳
      */
     var timerSystemCurrent : Long? = null
 }
