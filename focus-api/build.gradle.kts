@@ -1,10 +1,10 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.vanniktech.maven.publish.JavadocJar
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.library")
-    kotlin("android")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.vanniktech.maven.publish)
 }
@@ -40,7 +40,7 @@ kotlin {
 }
 
 mavenPublishing {
-    configureBasedOnAppliedPlugins(javadocJar = true)
+    configureBasedOnAppliedPlugins(javadocJar = JavadocJar.Javadoc())
 
     coordinates(group.toString(), name, version.toString())
 
