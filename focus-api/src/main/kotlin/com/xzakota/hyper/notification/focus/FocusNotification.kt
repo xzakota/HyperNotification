@@ -2,6 +2,7 @@ package com.xzakota.hyper.notification.focus
 
 import android.os.Bundle
 import android.os.Parcelable
+import com.xzakota.hyper.notification.focus.template.BaseFocusTemplate
 import com.xzakota.hyper.notification.focus.template.CustomFocusTemplate
 import com.xzakota.hyper.notification.focus.template.CustomFocusTemplateV3
 import com.xzakota.hyper.notification.focus.template.FocusTemplate
@@ -9,25 +10,28 @@ import com.xzakota.hyper.notification.focus.template.FocusTemplateV3
 import com.xzakota.hyper.notification.focus.util.JSONUtils
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.util.function.Consumer
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class FocusNotification private constructor() {
     private lateinit var factory : FocusTemplateFactory
     private var focusVersion = -1
-    private var isCustomFocus = false
     private val pics = mutableMapOf<String, Parcelable?>()
     private val actions = mutableMapOf<String, Parcelable?>()
 
     fun buildBundle() : Bundle = Bundle().apply {
-        if (isCustomFocus) {
-            val param = (factory as FocusTemplateFactory.CustomV2).param
-            putString("miui.focus.param.custom", JSONUtils.toJSONString(param))
-            param.rv.forEach { (k, v) ->
-                putParcelable(k, v)
+        when (factory) {
+            is FocusTemplateFactory.CustomV2,
+            is FocusTemplateFactory.CustomV3 -> {
+                val param = factory.param as CustomFocusTemplate
+                putString("miui.focus.param.custom", JSONUtils.toJSONString(param))
+                param.rv.forEach { (k, v) ->
+                    putParcelable(k, v)
+                }
             }
-        } else {
-            putString("miui.focus.param", getParamJSON())
+
+            else -> putString("miui.focus.param", getFactoryJSON())
         }
 
         if (pics.isNotEmpty()) {
@@ -39,7 +43,7 @@ class FocusNotification private constructor() {
         }
     }
 
-    fun getParamJSON() : String = JSONUtils.toJSONString(factory)
+    fun getFactoryJSON() : String = JSONUtils.toJSONString(factory)
 
     internal fun createPicture(key : String, value : Parcelable) : String = key.also {
         pics[it] = value
@@ -61,7 +65,7 @@ class FocusNotification private constructor() {
         }
     }
 
-    override fun toString() : String = "param => ${getParamJSON()}, pics(${pics.size}) => ${pics.keys}"
+    override fun toString() : String = "factory => ${getFactoryJSON()}, pics(${pics.size}) => ${pics.keys}"
 
     @Suppress("ClassName")
     companion object `Companion-Object` {
@@ -77,7 +81,6 @@ class FocusNotification private constructor() {
         @JvmSynthetic
         fun createV2(block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
-            isCustomFocus = false
             factory = FocusTemplateFactory.V2(
                 FocusTemplate().also {
                     it.configWith(this)
@@ -94,7 +97,6 @@ class FocusNotification private constructor() {
         @JvmSynthetic
         fun createV3(block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
-            isCustomFocus = false
             factory = FocusTemplateFactory.V3(
                 FocusTemplateV3().also {
                     it.configWith(this)
@@ -127,7 +129,6 @@ class FocusNotification private constructor() {
         @JvmSynthetic
         fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
-            isCustomFocus = true
             factory = FocusTemplateFactory.CustomV2(
                 CustomFocusTemplate().also {
                     it.configWith(this)
@@ -144,7 +145,6 @@ class FocusNotification private constructor() {
         @JvmSynthetic
         fun createCustomV3(block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
-            isCustomFocus = true
             factory = FocusTemplateFactory.CustomV3(
                 CustomFocusTemplateV3().also {
                     it.configWith(this)
@@ -167,17 +167,17 @@ class FocusNotification private constructor() {
     }
 
     @Serializable
-    internal sealed class FocusTemplateFactory {
+    internal sealed class FocusTemplateFactory(@Transient open val param : BaseFocusTemplate? = null) {
         @Serializable
-        class V2(@SerialName("param_v2") val param : FocusTemplate) : FocusTemplateFactory()
+        class V2(@SerialName("param_v2") override val param : FocusTemplate) : FocusTemplateFactory(param)
 
         @Serializable
-        class V3(@SerialName("param_v2") val param : FocusTemplateV3) : FocusTemplateFactory()
+        class V3(@SerialName("param_v2") override val param : FocusTemplateV3) : FocusTemplateFactory(param)
 
         @Serializable
-        class CustomV2(val param : CustomFocusTemplate) : FocusTemplateFactory()
+        class CustomV2(override val param : CustomFocusTemplate) : FocusTemplateFactory(param)
 
         @Serializable
-        class CustomV3(val param : CustomFocusTemplateV3) : FocusTemplateFactory()
+        class CustomV3(override val param : CustomFocusTemplateV3) : FocusTemplateFactory(param)
     }
 }
