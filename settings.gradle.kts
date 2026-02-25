@@ -6,7 +6,6 @@ pluginManagement {
         maven("https://maven.aliyun.com/repository/public/")
         maven("https://maven.aliyun.com/repository/google/")
 
-        mavenLocal()
         google()
         mavenCentral()
         gradlePluginPortal()

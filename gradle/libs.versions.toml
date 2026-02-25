@@ -1,7 +1,7 @@
 [versions]
-kotlin = "2.3.0"
+kotlin = "2.3.10"
+junit6 = "6.0.3"
 agp = "9.0.0"
-junit6 = "6.0.2"
 
 [libraries]
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.10.0" }
