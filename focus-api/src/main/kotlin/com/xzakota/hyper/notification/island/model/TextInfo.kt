@@ -8,7 +8,7 @@ import java.util.function.Consumer
 @Serializable
 class TextInfo {
     /**
-     * ⼤字
+     * 大字
      */
     var title : String? = null
 

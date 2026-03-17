@@ -21,6 +21,7 @@ open class CustomFocusTemplate : BaseFocusTemplate() {
         const val LAYOUT = "miui.focus.rv"
         const val LAYOUT_NIGHT = "miui.focus.rvNight"
         const val LAYOUT_AOD = "miui.focus.rvAod"
+        const val LAYOUT_FULL_AOD = "miui.focus.rv.fullAod"
         const val LAYOUT_FLIP_TINY = "miui.focus.rv.tiny"
         const val LAYOUT_FLIP_TINY_NIGHT = "miui.focus.rv.tinyNight"
         const val LAYOUT_DECO_LAND = "miui.focus.rv.deco.land"
