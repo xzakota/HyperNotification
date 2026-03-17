@@ -65,6 +65,16 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         reflectCollect(from, FocusTemplateV3::class.java)
     }
 
+    fun coverInfo(consumer : Consumer<CoverInfo>) = coverInfo {
+        consumer.accept(this)
+    }
+
+    @JvmSynthetic
+    fun coverInfo(block : CoverInfo.() -> Unit) {
+        val info = coverInfo ?: CoverInfo().also { coverInfo = it }
+        info.apply(block)
+    }
+
     fun highlightInfoV3(consumer : Consumer<HighlightInfoV3>) = highlightInfoV3 {
         consumer.accept(this)
     }
