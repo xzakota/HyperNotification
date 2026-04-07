@@ -13,9 +13,7 @@ class SmallIslandArea : IPicInfoCreator {
      */
     var combinePicInfo : CombinePicInfo? = null
 
-    fun combinePicInfo(consumer : Consumer<CombinePicInfo>) = combinePicInfo {
-        consumer.accept(this)
-    }
+    fun combinePicInfo(consumer : Consumer<CombinePicInfo>) = combinePicInfo(consumer::accept)
 
     @JvmSynthetic
     fun combinePicInfo(block : CombinePicInfo.() -> Unit) {

@@ -43,9 +43,7 @@ internal interface ITextInfoCreator {
      */
     var textInfo : TextInfo?
 
-    fun textInfo(consumer : Consumer<TextInfo>) = textInfo {
-        consumer.accept(this)
-    }
+    fun textInfo(consumer : Consumer<TextInfo>) = textInfo(consumer::accept)
 
     @JvmSynthetic
     fun textInfo(block : TextInfo.() -> Unit) {

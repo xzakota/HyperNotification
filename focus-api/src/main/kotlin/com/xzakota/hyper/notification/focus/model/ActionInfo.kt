@@ -57,9 +57,7 @@ internal interface IActionInfoCreator {
      */
     var actionInfo : ActionInfo?
 
-    fun actionInfo(consumer : Consumer<ActionInfo>) = actionInfo {
-        consumer.accept(this)
-    }
+    fun actionInfo(consumer : Consumer<ActionInfo>) = actionInfo(consumer::accept)
 
     @JvmSynthetic
     fun actionInfo(block : ActionInfo.() -> Unit) {

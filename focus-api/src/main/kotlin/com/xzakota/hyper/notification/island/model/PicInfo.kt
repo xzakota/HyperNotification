@@ -33,9 +33,7 @@ internal interface IPicInfoCreator {
      */
     var picInfo : PicInfo?
 
-    fun picInfo(consumer : Consumer<PicInfo>) = picInfo {
-        consumer.accept(this)
-    }
+    fun picInfo(consumer : Consumer<PicInfo>) = picInfo(consumer::accept)
 
     @JvmSynthetic
     fun picInfo(block : PicInfo.() -> Unit) {

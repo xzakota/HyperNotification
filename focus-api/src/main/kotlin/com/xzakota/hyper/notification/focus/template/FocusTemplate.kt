@@ -60,9 +60,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         reflectCollect(from, FocusTemplate::class.java)
     }
 
-    fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo {
-        consumer.accept(this)
-    }
+    fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo(consumer::accept)
 
     @JvmSynthetic
     fun baseInfo(block : BaseInfo.() -> Unit) {
@@ -70,9 +68,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun chatInfo(consumer : Consumer<ChatInfo>) = chatInfo {
-        consumer.accept(this)
-    }
+    fun chatInfo(consumer : Consumer<ChatInfo>) = chatInfo(consumer::accept)
 
     @JvmSynthetic
     fun chatInfo(block : ChatInfo.() -> Unit) {
@@ -80,9 +76,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun highlightInfo(consumer : Consumer<HighlightInfo>) = highlightInfo {
-        consumer.accept(this)
-    }
+    fun highlightInfo(consumer : Consumer<HighlightInfo>) = highlightInfo(consumer::accept)
 
     @JvmSynthetic
     fun highlightInfo(block : HighlightInfo.() -> Unit) {
@@ -90,9 +84,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun hintInfo(consumer : Consumer<HintInfo>) = hintInfo {
-        consumer.accept(this)
-    }
+    fun hintInfo(consumer : Consumer<HintInfo>) = hintInfo(consumer::accept)
 
     @JvmSynthetic
     fun hintInfo(block : HintInfo.() -> Unit) {
@@ -100,9 +92,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo {
-        consumer.accept(this)
-    }
+    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo(consumer::accept)
 
     @JvmSynthetic
     fun progressInfo(block : ProgressInfo.() -> Unit) {
@@ -110,9 +100,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun picInfo(consumer : Consumer<PicInfo>) = picInfo {
-        consumer.accept(this)
-    }
+    fun picInfo(consumer : Consumer<PicInfo>) = picInfo(consumer::accept)
 
     @JvmSynthetic
     fun picInfo(block : PicInfo.() -> Unit) {
@@ -120,9 +108,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun bgInfo(consumer : Consumer<BgInfo>) = bgInfo {
-        consumer.accept(this)
-    }
+    fun bgInfo(consumer : Consumer<BgInfo>) = bgInfo(consumer::accept)
 
     @JvmSynthetic
     fun bgInfo(block : BgInfo.() -> Unit) {
@@ -130,9 +116,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun actions(consumer : Consumer<ArrayList<ActionInfo>>) = actions {
-        consumer.accept(this)
-    }
+    fun actions(consumer : Consumer<ArrayList<ActionInfo>>) = actions(consumer::accept)
 
     @JvmSynthetic
     fun actions(block : ArrayList<ActionInfo>.() -> Unit) {
@@ -140,9 +124,7 @@ open class FocusTemplate : BaseFocusTemplate() {
         info.apply(block)
     }
 
-    fun ArrayList<ActionInfo>.addActionInfo(consumer : Consumer<ActionInfo>) = addActionInfo {
-        consumer.accept(this)
-    }
+    fun ArrayList<ActionInfo>.addActionInfo(consumer : Consumer<ActionInfo>) = addActionInfo(consumer::accept)
 
     @JvmSynthetic
     fun ArrayList<ActionInfo>.addActionInfo(block : ActionInfo.() -> Unit) {

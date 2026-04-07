@@ -36,9 +36,7 @@ internal interface IProgressInfoCreator {
      */
     var progressInfo : ProgressInfo?
 
-    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo {
-        consumer.accept(this)
-    }
+    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo(consumer::accept)
 
     @JvmSynthetic
     fun progressInfo(block : ProgressInfo.() -> Unit) {

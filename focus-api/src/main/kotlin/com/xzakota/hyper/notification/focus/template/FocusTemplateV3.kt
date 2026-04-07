@@ -65,9 +65,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         reflectCollect(from, FocusTemplateV3::class.java)
     }
 
-    fun coverInfo(consumer : Consumer<CoverInfo>) = coverInfo {
-        consumer.accept(this)
-    }
+    fun coverInfo(consumer : Consumer<CoverInfo>) = coverInfo(consumer::accept)
 
     @JvmSynthetic
     fun coverInfo(block : CoverInfo.() -> Unit) {
@@ -75,9 +73,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         info.apply(block)
     }
 
-    fun highlightInfoV3(consumer : Consumer<HighlightInfoV3>) = highlightInfoV3 {
-        consumer.accept(this)
-    }
+    fun highlightInfoV3(consumer : Consumer<HighlightInfoV3>) = highlightInfoV3(consumer::accept)
 
     @JvmSynthetic
     fun highlightInfoV3(block : HighlightInfoV3.() -> Unit) {
@@ -85,9 +81,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         info.apply(block)
     }
 
-    fun iconTextInfo(consumer : Consumer<IconTextInfo>) = iconTextInfo {
-        consumer.accept(this)
-    }
+    fun iconTextInfo(consumer : Consumer<IconTextInfo>) = iconTextInfo(consumer::accept)
 
     @JvmSynthetic
     fun iconTextInfo(block : IconTextInfo.() -> Unit) {
@@ -95,9 +89,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         info.apply(block)
     }
 
-    fun multiProgressInfo(consumer : Consumer<MultiProgressInfo>) = multiProgressInfo {
-        consumer.accept(this)
-    }
+    fun multiProgressInfo(consumer : Consumer<MultiProgressInfo>) = multiProgressInfo(consumer::accept)
 
     @JvmSynthetic
     fun multiProgressInfo(block : MultiProgressInfo.() -> Unit) {
@@ -105,9 +97,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         info.apply(block)
     }
 
-    fun animTextInfo(consumer : Consumer<AnimTextInfo>) = animTextInfo {
-        consumer.accept(this)
-    }
+    fun animTextInfo(consumer : Consumer<AnimTextInfo>) = animTextInfo(consumer::accept)
 
     @JvmSynthetic
     fun animTextInfo(block : AnimTextInfo.() -> Unit) {
@@ -115,9 +105,7 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         info.apply(block)
     }
 
-    fun textButton(consumer : Consumer<ArrayList<ActionInfo>>) = textButton {
-        consumer.accept(this)
-    }
+    fun textButton(consumer : Consumer<ArrayList<ActionInfo>>) = textButton(consumer::accept)
 
     @JvmSynthetic
     fun textButton(block : ArrayList<ActionInfo>.() -> Unit) {

@@ -14,9 +14,7 @@ class CombinePicInfo : IPicInfoCreator, IProgressInfoCreator {
     override var picInfo : PicInfo? = null
     override var progressInfo : ProgressInfo? = null
 
-    fun smallPicInfo(consumer : Consumer<PicInfo>) = smallPicInfo {
-        consumer.accept(this)
-    }
+    fun smallPicInfo(consumer : Consumer<PicInfo>) = smallPicInfo(consumer::accept)
 
     @JvmSynthetic
     fun smallPicInfo(block : PicInfo.() -> Unit) {

@@ -74,9 +74,7 @@ class FocusNotification private constructor() {
          * ==================================================== */
 
         @JvmStatic
-        fun createV2(consumer : Consumer<FocusTemplate>) : FocusNotification = createV2 {
-            consumer.accept(this)
-        }
+        fun createV2(consumer : Consumer<FocusTemplate>) : FocusNotification = createV2(consumer::accept)
 
         @JvmSynthetic
         fun createV2(block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
@@ -90,9 +88,7 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createV3(consumer : Consumer<FocusTemplateV3>) : FocusNotification = createV3 {
-            consumer.accept(this)
-        }
+        fun createV3(consumer : Consumer<FocusTemplateV3>) : FocusNotification = createV3(consumer::accept)
 
         @JvmSynthetic
         fun createV3(block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
@@ -122,9 +118,7 @@ class FocusNotification private constructor() {
          * ==================================================== */
 
         @JvmStatic
-        fun createCustomV2(consumer : Consumer<CustomFocusTemplate>) : FocusNotification = createCustomV2 {
-            consumer.accept(this)
-        }
+        fun createCustomV2(consumer : Consumer<CustomFocusTemplate>) : FocusNotification = createCustomV2(consumer::accept)
 
         @JvmSynthetic
         fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
@@ -138,9 +132,7 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : FocusNotification = createCustomV3 {
-            consumer.accept(this)
-        }
+        fun createCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : FocusNotification = createCustomV3(consumer::accept)
 
         @JvmSynthetic
         fun createCustomV3(block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {

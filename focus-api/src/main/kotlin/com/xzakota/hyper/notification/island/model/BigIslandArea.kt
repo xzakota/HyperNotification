@@ -34,9 +34,7 @@ class BigIslandArea {
      */
     var sameWidthDigitInfo : SameWidthDigitInfo? = null
 
-    fun imageTextInfoLeft(consumer : Consumer<ImageTextInfo>) = imageTextInfoLeft {
-        consumer.accept(this)
-    }
+    fun imageTextInfoLeft(consumer : Consumer<ImageTextInfo>) = imageTextInfoLeft(consumer::accept)
 
     @JvmSynthetic
     fun imageTextInfoLeft(block : ImageTextInfo.() -> Unit) {
@@ -44,9 +42,7 @@ class BigIslandArea {
         info.apply(block)
     }
 
-    fun imageTextInfoRight(consumer : Consumer<ImageTextInfo>) = imageTextInfoRight {
-        consumer.accept(this)
-    }
+    fun imageTextInfoRight(consumer : Consumer<ImageTextInfo>) = imageTextInfoRight(consumer::accept)
 
     @JvmSynthetic
     fun imageTextInfoRight(block : ImageTextInfo.() -> Unit) {
@@ -54,9 +50,7 @@ class BigIslandArea {
         info.apply(block)
     }
 
-    fun progressTextInfo(consumer : Consumer<ProgressTextInfo>) = progressTextInfo {
-        consumer.accept(this)
-    }
+    fun progressTextInfo(consumer : Consumer<ProgressTextInfo>) = progressTextInfo(consumer::accept)
 
     @JvmSynthetic
     fun progressTextInfo(block : ProgressTextInfo.() -> Unit) {
@@ -64,9 +58,7 @@ class BigIslandArea {
         info.apply(block)
     }
 
-    fun fixedWidthDigitInfo(consumer : Consumer<FixedWidthDigitInfo>) = fixedWidthDigitInfo {
-        consumer.accept(this)
-    }
+    fun fixedWidthDigitInfo(consumer : Consumer<FixedWidthDigitInfo>) = fixedWidthDigitInfo(consumer::accept)
 
     @JvmSynthetic
     fun fixedWidthDigitInfo(block : FixedWidthDigitInfo.() -> Unit) {
@@ -74,9 +66,7 @@ class BigIslandArea {
         info.apply(block)
     }
 
-    fun sameWidthDigitInfo(consumer : Consumer<SameWidthDigitInfo>) = sameWidthDigitInfo {
-        consumer.accept(this)
-    }
+    fun sameWidthDigitInfo(consumer : Consumer<SameWidthDigitInfo>) = sameWidthDigitInfo(consumer::accept)
 
     @JvmSynthetic
     fun sameWidthDigitInfo(block : SameWidthDigitInfo.() -> Unit) {

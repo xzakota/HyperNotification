@@ -41,9 +41,7 @@ internal interface ITimerInfoCreator {
      */
     var timerInfo : TimerInfo?
 
-    fun timerInfo(consumer : Consumer<TimerInfo>) = timerInfo {
-        consumer.accept(this)
-    }
+    fun timerInfo(consumer : Consumer<TimerInfo>) = timerInfo(consumer::accept)
 
     @JvmSynthetic
     fun timerInfo(block : TimerInfo.() -> Unit) {

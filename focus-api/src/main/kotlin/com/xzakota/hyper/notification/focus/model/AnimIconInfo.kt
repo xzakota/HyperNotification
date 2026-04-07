@@ -30,9 +30,7 @@ internal interface IAnimIconInfoCreator {
      */
     var animIconInfo : AnimIconInfo?
 
-    fun animIconInfo(consumer : Consumer<AnimIconInfo>) = animIconInfo {
-        consumer.accept(this)
-    }
+    fun animIconInfo(consumer : Consumer<AnimIconInfo>) = animIconInfo(consumer::accept)
 
     @JvmSynthetic
     fun animIconInfo(block : AnimIconInfo.() -> Unit) {

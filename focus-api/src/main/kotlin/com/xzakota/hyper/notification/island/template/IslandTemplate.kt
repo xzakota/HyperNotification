@@ -68,9 +68,7 @@ class IslandTemplate {
      */
     var shareData : ShareData? = null
 
-    fun smallIslandArea(consumer : Consumer<SmallIslandArea>) = smallIslandArea {
-        consumer.accept(this)
-    }
+    fun smallIslandArea(consumer : Consumer<SmallIslandArea>) = smallIslandArea(consumer::accept)
 
     @JvmSynthetic
     fun smallIslandArea(block : SmallIslandArea.() -> Unit) {
@@ -78,9 +76,7 @@ class IslandTemplate {
         info.apply(block)
     }
 
-    fun bigIslandArea(consumer : Consumer<BigIslandArea>) = bigIslandArea {
-        consumer.accept(this)
-    }
+    fun bigIslandArea(consumer : Consumer<BigIslandArea>) = bigIslandArea(consumer::accept)
 
     @JvmSynthetic
     fun bigIslandArea(block : BigIslandArea.() -> Unit) {
@@ -88,9 +84,7 @@ class IslandTemplate {
         info.apply(block)
     }
 
-    fun shareData(consumer : Consumer<ShareData>) = shareData {
-        consumer.accept(this)
-    }
+    fun shareData(consumer : Consumer<ShareData>) = shareData(consumer::accept)
 
     @JvmSynthetic
     fun shareData(block : ShareData.() -> Unit) {
@@ -105,9 +99,7 @@ internal interface IIslandTemplateCreator {
      */
     var island : IslandTemplate?
 
-    fun island(consumer : Consumer<IslandTemplate>) = island {
-        consumer.accept(this)
-    }
+    fun island(consumer : Consumer<IslandTemplate>) = island(consumer::accept)
 
     @JvmSynthetic
     fun island(block : IslandTemplate.() -> Unit) {
