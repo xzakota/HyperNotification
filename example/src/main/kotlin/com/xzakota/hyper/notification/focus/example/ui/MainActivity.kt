@@ -1,185 +1,37 @@
-package com.xzakota.hyper.notification.focus.example.ui
+﻿package com.xzakota.hyper.notification.focus.example.ui
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
-import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.RemoteViews
-import android.widget.Toast
-import com.xzakota.hyper.notification.focus.FocusNotification
-import com.xzakota.hyper.notification.focus.example.BuildConfig
-import com.xzakota.hyper.notification.focus.example.R
-import com.xzakota.hyper.notification.focus.example.databinding.LayoutActivityMainBinding
-import com.xzakota.hyper.notification.focus.example.extension.toBitmap
-import com.xzakota.hyper.notification.focus.template.CustomFocusTemplate
-import com.xzakota.hyper.notification.focus.template.CustomFocusTemplateV3
-import kotlin.random.Random
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import com.xzakota.hyper.notification.focus.example.ui.utils.Constants
+import com.xzakota.hyper.notification.focus.example.ui.navigation.AppNavigation
+import com.xzakota.hyper.notification.focus.example.ui.navigation.Route
+import com.xzakota.hyper.notification.focus.example.ui.utils.ThemeUtils
 
-@Suppress("SameParameterValue")
-@SuppressLint("SetTextI18n")
-class MainActivity : Activity(), View.OnClickListener {
-    private lateinit var notificationManager : NotificationManager
-
-    override fun onCreate(savedInstanceState : Bundle?) {
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        com.xzakota.hyper.notification.focus.example.ui.utils.AppUtils.initPredictiveBackGesture(application)
         super.onCreate(savedInstanceState)
-
-        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        val binding = LayoutActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.postFocusButton.setOnClickListener(this)
-        binding.postCustomFocusButton.setOnClickListener(this)
-    }
-
-    override fun onClick(v : View) {
-        if (!notificationManager.areNotificationsEnabled()) {
-            showToast("No notification permission")
-            return
+        
+        val prefs = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE)
+        val excludeFromRecents = prefs.getBoolean(Constants.KEY_EXCLUDE_FROM_RECENTS, Constants.DEFAULT_EXCLUDE_FROM_RECENTS)
+        if (excludeFromRecents) {
+            try {
+                val am = getSystemService(ACTIVITY_SERVICE) as android.app.ActivityManager
+                am.appTasks?.forEach { it.setExcludeFromRecents(true) }
+            } catch (_: Exception) { }
         }
 
-        // create channel
-        if (notificationManager.getNotificationChannel(ID_FOCUS_CHANNEL) == null) {
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    ID_FOCUS_CHANNEL, "Focus Notification", NotificationManager.IMPORTANCE_DEFAULT
-                ).apply {
-                    description = "Post focus notification for HyperOS"
-                    setSound(null, null)
-                    setAllowBubbles(true)
-                }
-            )
+        enableEdgeToEdge()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
         }
 
-        val tickerText = "Ticker"
-        val titleText = "Title"
-        val contentText = "Content"
-        val random = Random(System.currentTimeMillis()).nextInt()
-
-        val intent = packageManager.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID) ?: return
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-        val iconBitmap = packageManager.getActivityIcon(intent).toBitmap()
-        val icon = Icon.createWithBitmap(iconBitmap)
-        val uri = intent.toUri(Intent.URI_INTENT_SCHEME)
-
-        // build focus bundle
-        val extras = when (v.id) {
-            R.id.post_focus_button -> FocusNotification.buildV3 {
-                val logo = createPicture("key_logo", icon)
-
-                enableFloat = true
-                ticker = tickerText
-                tickerPic = logo
-
-                baseInfo {
-                    type = 1
-                    title = titleText
-                    content = contentText
-                }
-
-                hintInfo {
-                    type = 2
-                    title = "$random"
-                    content = "Hint $contentText"
-
-                    actionInfo {
-                        actionTitle = "Action"
-                        actionIntent = uri
-                    }
-                }
-
-                isShowNotification = false
-                island {
-                    islandProperty = 1
-                    bigIslandArea {
-                        imageTextInfoLeft {
-                            type = 1
-                            picInfo {
-                                type = 1
-                                pic = logo
-                            }
-                        }
-
-                        imageTextInfoRight {
-                            type = 2
-                            textInfo {
-                                title = titleText
-                            }
-                        }
-                    }
-
-                    shareData {
-                        title = titleText
-                        content = contentText
-                        shareContent = contentText
-                    }
-                }
-
-                actions {
-                    addActionInfo {
-                        actionIcon = logo
-                        actionIntent = uri
-                    }
-
-                    addActionInfo {
-                        action = createAction(
-                            "key_action1",
-                            Notification.Action.Builder(icon, null, pendingIntent).build()
-                        )
-                    }
-                }
+        setContent {
+            ThemeUtils.MiuixThemeWrapper {
+                AppNavigation(startRoute = Route.Main)
             }
-
-            R.id.post_custom_focus_button -> FocusNotification.buildCustomV2 {
-                enableFloat = true
-                ticker = tickerText
-                tickerPic = createPicture("key_logo", icon)
-
-                fun initRemoteViews(key : String, layoutId : Int) {
-                    createRemoteViews(key, RemoteViews(packageName, layoutId).apply {
-                        setTextViewText(R.id.content, "It's a long text.It's a long text.It's a long text. $random")
-                    })
-                }
-
-                initRemoteViews(CustomFocusTemplate.LAYOUT, R.layout.layout_focus_custom)
-                initRemoteViews(CustomFocusTemplate.LAYOUT_NIGHT, R.layout.layout_focus_custom_night)
-                initRemoteViews(CustomFocusTemplateV3.LAYOUT_ISLAND_EXPAND, R.layout.layout_focus_custom_night)
-            }
-
-            else -> null
         }
-
-        // free bitmap
-        iconBitmap.recycle()
-
-        if (BuildConfig.DEBUG) {
-            Log.d("FocusNotify", extras.toString())
-        }
-
-        // notify
-        notificationManager.notify(
-            v.id,
-            Notification.Builder(this, ID_FOCUS_CHANNEL)
-                .setSmallIcon(icon)
-                .setTicker(tickerText)
-                .setContentTitle(titleText)
-                .setContentText(contentText)
-                .setContentIntent(pendingIntent)
-                .addExtras(extras)
-                .build()
-        )
-    }
-
-    private fun showToast(massage : CharSequence) = Toast.makeText(this, massage, Toast.LENGTH_SHORT).show()
-
-    private companion object {
-        var ID_FOCUS_CHANNEL = "focus_channel"
     }
 }
