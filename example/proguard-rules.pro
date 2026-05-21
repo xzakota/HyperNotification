@@ -20,3 +20,13 @@
 # Keep focus-api classes
 -keep class com.xzakota.hyper.notification.focus.example.api.** { *; }
 -keep class com.xzakota.hyper.notification.focus.example.core.** { *; }
+
+# Keep AIDL interfaces and their generated stub/proxy classes
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedService { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedService$** { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedLogCallback { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedLogCallback$** { *; }
+
+# Keep Shizuku SDK classes and methods used via reflection/IPC
+-keep class rikka.shizuku.** { *; }
+-keep interface rikka.shizuku.** { *; }

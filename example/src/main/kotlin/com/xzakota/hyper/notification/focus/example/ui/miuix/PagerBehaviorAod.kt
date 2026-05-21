@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Card
@@ -109,6 +108,14 @@ fun PagerBehaviorAod(
                             checked = state.filterWhenNoPermissionVal,
                             onCheckedChange = { state.filterWhenNoPermissionVal = it },
                             summary = "焦点通知权限被关闭时退化为普通通知的处理方式"
+                        )
+                        SwitchPreference(
+                            title = "outEffectSrc",
+                            checked = state.outEffectSrc.isNotEmpty(),
+                            onCheckedChange = { checked ->
+                                state.outEffectSrc = if (checked) "glow" else ""
+                            },
+                            summary = "超级岛展开态环绕光效"
                         )
                     }
                 }

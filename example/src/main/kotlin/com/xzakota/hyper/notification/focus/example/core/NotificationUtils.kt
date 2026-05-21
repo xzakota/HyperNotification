@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.core
+package com.xzakota.hyper.notification.focus.example.core
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -6,10 +6,20 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import org.json.JSONObject
 import com.xzakota.hyper.notification.focus.example.ui.miuix.NotificationState
+import com.xzakota.hyper.notification.focus.example.core.shizuku.ShizukuManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
 
 object NotificationUtils {
+
+    private val shizukuScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     fun sendBaseInfoNotification(context: Context, state: NotificationState) {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -33,6 +43,10 @@ object NotificationUtils {
             put("updatable", state.updatableVal)
             put("reopen", state.reopenText)
             put("filterWhenNoPermission", state.filterWhenNoPermissionVal)
+            put("isShowNotification", state.isShowNotificationVal)
+            if (state.outEffectSrc.isNotEmpty()) {
+                put("outEffectSrc", state.outEffectSrc)
+            }
 
             if (state.aodTitleText.isNotEmpty()) {
                 put("aodTitle", state.aodTitleText)
@@ -659,6 +673,64 @@ object NotificationUtils {
             putString("miui.focus.param", paramJson.toString())
         }
 
+        if (state.bypassFocusLimit) {
+            val hasPermission = try {
+                ShizukuManager.isShizukuServiceRunning() &&
+                rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED
+            } catch (e: Throwable) {
+                false
+            }
+
+            if (!hasPermission) {
+                state.bypassFocusLimit = false
+                Toast.makeText(context, "Shizuku 服务未运行或未授权，已自动关闭绕过并使用普通模式发送", Toast.LENGTH_SHORT).show()
+                dispatchNotification(context, channelId, pendingIntent, bundle, state, manager)
+                return
+            }
+
+            shizukuScope.launch {
+                var networkDisabled = false
+                try {
+                    val disableSuccess = ShizukuManager.setXmsfNetworkingEnabled(context, false)
+                    if (disableSuccess) {
+                        networkDisabled = true
+                        Log.d("NotificationUtils", "Successfully cut off network for XMSF")
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Shizuku 提权拦截网络失败，已使用普通模式发送", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } catch (e: Throwable) {
+                    Log.e("NotificationUtils", "Error cutting off XMSF network", e)
+                }
+
+                withContext(Dispatchers.Main) {
+                    dispatchNotification(context, channelId, pendingIntent, bundle, state, manager)
+                }
+
+                if (networkDisabled) {
+                    delay(100L)
+                    try {
+                        ShizukuManager.setXmsfNetworkingEnabled(context, true)
+                        Log.d("NotificationUtils", "Successfully restored network for XMSF")
+                    } catch (e: Throwable) {
+                        Log.e("NotificationUtils", "Error restoring XMSF network", e)
+                    }
+                }
+            }
+        } else {
+            dispatchNotification(context, channelId, pendingIntent, bundle, state, manager)
+        }
+    }
+
+    private fun dispatchNotification(
+        context: Context,
+        channelId: String,
+        pendingIntent: android.app.PendingIntent?,
+        bundle: Bundle,
+        state: NotificationState,
+        manager: NotificationManager
+    ) {
         val builder = Notification.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(state.normalTitle.ifEmpty { "Hyper Notification" })

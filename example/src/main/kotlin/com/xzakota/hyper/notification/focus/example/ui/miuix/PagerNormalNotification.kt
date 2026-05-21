@@ -1,28 +1,32 @@
 package com.xzakota.hyper.notification.focus.example.ui.miuix
 
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.basic.Button
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.SmallTitle
-import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import com.xzakota.hyper.notification.focus.example.core.NotificationUtils
+import top.yukonga.miuix.kmp.preference.SwitchPreference
+import com.xzakota.hyper.notification.focus.example.core.shizuku.ShizukuManager
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
+import kotlinx.coroutines.launch
+import rikka.shizuku.Shizuku
 
 @Composable
 fun PagerNormalNotification(
@@ -31,6 +35,38 @@ fun PagerNormalNotification(
 ) {
     val context = LocalContext.current
     val topAppBarScrollBehavior = MiuixScrollBehavior()
+    val scope = rememberCoroutineScope()
+
+    DisposableEffect(Unit) {
+        val binderDeadListener = Shizuku.OnBinderDeadListener {
+            state.bypassFocusLimit = false
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, "Shizuku 服务已死亡，绕过已关闭", Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (ShizukuManager.isShizukuServiceRunning()) {
+            try {
+                Shizuku.addBinderDeadListener(binderDeadListener)
+            } catch (_: Throwable) {
+                // Ignore
+            }
+        }
+        ShizukuManager.onServiceDisconnectedCallback = {
+            state.bypassFocusLimit = false
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, "检测到 Shizuku 服务离线，绕过选项已自动回退关闭", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        onDispose {
+            try {
+                Shizuku.removeBinderDeadListener(binderDeadListener)
+            } catch (_: Throwable) {
+                // Ignore
+            }
+            ShizukuManager.onServiceDisconnectedCallback = null
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -58,37 +94,66 @@ fun PagerNormalNotification(
                 ),
                 contentPadding = contentPadding
             ) {
-        item {
-            SmallTitle(text = "普通通知基本参数")
-        }
-        item {
-            Card(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(bottom = 12.dp)
-                    .fillMaxWidth()
-            ) {
-                TextField(
-                    value = state.normalTitle,
-                    onValueChange = { state.normalTitle = it },
-                    label = "通知标题 (Title)",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 12.dp)
-                )
-                TextField(
-                    value = state.normalContent,
-                    onValueChange = { state.normalContent = it },
-                    label = "通知内容 (Content)",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
-                )
+                item {
+                    SmallTitle(text = "普通通知基本参数")
+                }
+                item {
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .padding(bottom = 12.dp)
+                            .fillMaxWidth()
+                    ) {
+                        TextField(
+                            value = state.normalTitle,
+                            onValueChange = { state.normalTitle = it },
+                            label = "Title (标题)",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp, vertical = 12.dp)
+                        )
+                        TextField(
+                            value = state.normalContent,
+                            onValueChange = { state.normalContent = it },
+                            label = "Content (通知内容)",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+                        )
+                    }
+                }
+
+                item {
+                    Card(
+                        modifier = Modifier
+                            .padding(horizontal = 12.dp)
+                            .padding(bottom = 12.dp)
+                            .fillMaxWidth()
+                    ) {
+                        SwitchPreference(
+                            title = "绕过焦点通知限制（shizuku）",
+                            checked = state.bypassFocusLimit,
+                            onCheckedChange = { checked ->
+                                if (checked) {
+                                    scope.launch {
+                                        val granted = ShizukuManager.checkShizukuPermission()
+                                        if (granted) {
+                                            state.bypassFocusLimit = true
+                                            Toast.makeText(context, "已开启", Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            state.bypassFocusLimit = false
+                                            Toast.makeText(context, "Shizuku 授权失败", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                                } else {
+                                    state.bypassFocusLimit = false
+                                }
+                            }
+                        )
+                    }
+                }
             }
         }
-
     }
-}
-}
 }
 

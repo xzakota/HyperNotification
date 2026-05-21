@@ -1,6 +1,7 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateListOf
@@ -90,10 +91,11 @@ class NotificationState {
     var normalTitle by mutableStateOf("普通通知标题")
     var normalContent by mutableStateOf("这里是普通安卓通知的内容，可以与焦点通知的文本不一致。")
 
+    // 0.4 Shizuku 绕过限制特权开关（纯内存状态，不持久化）
+    var bypassFocusLimit by mutableStateOf(false)
+
     // 0.2 控制子模块折叠/展开的状态 (针对 V3)
     var enableIsland by mutableStateOf(true)
-    var showExtraV3Param by mutableStateOf(true)
-    var showIslandTemplate by mutableStateOf(true)
     var showIslandLeftInfo by mutableStateOf(true)
     var showIslandRightInfo by mutableStateOf(false)
     var showShareData by mutableStateOf(false)
@@ -106,7 +108,6 @@ class NotificationState {
     var tickerText by mutableStateOf("外卖配送中")
     var tickerPicText by mutableStateOf("")
     var tickerPicDark by mutableStateOf("")
-    var showSmallIconVal by mutableStateOf(true)
     var timeoutText by mutableStateOf("720")
     var updatableVal by mutableStateOf(false)
     var enableFloatVal by mutableStateOf(false)
@@ -150,20 +151,12 @@ class NotificationState {
     var hintSubTitle by mutableStateOf("")
     var hintColorSubTitle by mutableStateOf("")
     var hintColorSubTitleDark by mutableStateOf("")
-    var hintExtraTitle by mutableStateOf("")
-    var hintColorExtraTitle by mutableStateOf("")
-    var hintColorExtraTitleDark by mutableStateOf("")
-    var hintSpecialTitle by mutableStateOf("")
-    var hintColorSpecialTitle by mutableStateOf("")
-    var hintColorSpecialTitleDark by mutableStateOf("")
-    var hintColorSpecialBg by mutableStateOf("")
     var hintContent by mutableStateOf("打个电话问问吧")
     var hintColorContent by mutableStateOf("")
     var hintColorContentDark by mutableStateOf("")
     var hintSubContent by mutableStateOf("")
     var hintColorSubContent by mutableStateOf("")
     var hintColorSubContentDark by mutableStateOf("")
-    var hintTitleLineCount by mutableStateOf("1")
     var hintColorContentBg by mutableStateOf("")
     var hintPicContent by mutableStateOf("")
 
@@ -171,41 +164,18 @@ class NotificationState {
     var chatTitle by mutableStateOf("小米客服")
     var chatColorTitle by mutableStateOf("")
     var chatColorTitleDark by mutableStateOf("")
-    var chatSubTitle by mutableStateOf("")
-    var chatColorSubTitle by mutableStateOf("")
-    var chatColorSubTitleDark by mutableStateOf("")
-    var chatExtraTitle by mutableStateOf("")
-    var chatColorExtraTitle by mutableStateOf("")
-    var chatColorExtraTitleDark by mutableStateOf("")
-    var chatSpecialTitle by mutableStateOf("")
-    var chatColorSpecialTitle by mutableStateOf("")
-    var chatColorSpecialTitleDark by mutableStateOf("")
-    var chatColorSpecialBg by mutableStateOf("")
     var chatContent by mutableStateOf("您有一条新的未读消息，请点击查看。")
     var chatColorContent by mutableStateOf("")
     var chatColorContentDark by mutableStateOf("")
-    var chatSubContent by mutableStateOf("")
-    var chatColorSubContent by mutableStateOf("")
-    var chatColorSubContentDark by mutableStateOf("")
     var chatPicProfile by mutableStateOf("https://avatars.githubusercontent.com/u/1373333?v=4")
     var chatPicProfileDark by mutableStateOf("")
     var chatAppIconPkg by mutableStateOf("")
 
     // 5. 强调图文组件 (highlightInfo)
-    var highlightTypeVal by mutableStateOf(0)
+    var highlightTypeVal by mutableIntStateOf(0)
     var highlightTitle by mutableStateOf("")
     var highlightColorTitle by mutableStateOf("")
     var highlightColorTitleDark by mutableStateOf("")
-    var highlightSubTitle by mutableStateOf("")
-    var highlightColorSubTitle by mutableStateOf("")
-    var highlightColorSubTitleDark by mutableStateOf("")
-    var highlightExtraTitle by mutableStateOf("")
-    var highlightColorExtraTitle by mutableStateOf("")
-    var highlightColorExtraTitleDark by mutableStateOf("")
-    var highlightSpecialTitle by mutableStateOf("")
-    var highlightColorSpecialTitle by mutableStateOf("")
-    var highlightColorSpecialTitleDark by mutableStateOf("")
-    var highlightColorSpecialBg by mutableStateOf("")
     var highlightContent by mutableStateOf("")
     var highlightColorContent by mutableStateOf("")
     var highlightColorContentDark by mutableStateOf("")
@@ -232,7 +202,7 @@ class NotificationState {
     var multiProgressColor by mutableStateOf("")
 
     // 7. 动作组件 (actionInfo)
-    var actionWayIndex by mutableStateOf(0) // 0 = 方式一 (系统 Action), 1 = 方式二 (自定义 Action)
+    var actionWayIndex by mutableIntStateOf(0) // 0 = 方式一 (系统 Action), 1 = 方式二 (自定义 Action)
     var actionType by mutableStateOf("0")
     var action by mutableStateOf("")
     var actionIntent by mutableStateOf("")
@@ -271,16 +241,10 @@ class NotificationState {
     var picBg by mutableStateOf("")
 
     // 11. V3 专属系统配置 (IExtraV3Param)
-    var cancelVal by mutableStateOf(false)
-    var hideDecoVal by mutableStateOf(false)
     var isShowNotificationVal by mutableStateOf(true)
     var islandFirstFloatVal by mutableStateOf(true)
-    var outEffectColor by mutableStateOf("")
     var outEffectSrc by mutableStateOf("")
-    var sequenceText by mutableStateOf("1")
     var businessText by mutableStateOf("")
-    var notifyIdText by mutableStateOf("")
-    var orderIdText by mutableStateOf("")
 
     // 12. 超级岛专属配置 (IslandTemplate)
     var islandPropertyVal by mutableStateOf(false) // False = 1, True = 2
@@ -292,26 +256,20 @@ class NotificationState {
     // 13. 大岛左侧图文 (imageTextInfoLeft)
     var islandLeftSelection by mutableStateOf("imageTextInfoLeft")
     var islandLeftPic by mutableStateOf("ics_delivery")
-    var islandLeftTypeVal by mutableStateOf(false) // False = 1, True = 2
     var islandLeftTitle by mutableStateOf("配送中")
     var islandLeftFrontTitle by mutableStateOf("")
     var islandLeftContent by mutableStateOf("已出发")
     var islandLeftShowHighlightVal by mutableStateOf(false)
     var islandLeftNarrowFontVal by mutableStateOf(false)
-    var islandLeftIsTitleDigitVal by mutableStateOf(false)
-    var islandLeftTurnAnimVal by mutableStateOf(false)
 
     // 14. 大岛右侧图文 (imageTextInfoRight)
     var islandRightSelection by mutableStateOf(if (showIslandRightInfo) "imageTextInfoRight" else "无")
     var islandRightPic by mutableStateOf("ics_delivery")
-    var islandRightTypeVal by mutableStateOf(true) // True = 2, False = 1
     var islandRightTitle by mutableStateOf("美团")
     var islandRightFrontTitle by mutableStateOf("")
     var islandRightContent by mutableStateOf("专送")
     var islandRightShowHighlightVal by mutableStateOf(false)
     var islandRightNarrowFontVal by mutableStateOf(false)
-    var islandRightIsTitleDigitVal by mutableStateOf(false)
-    var islandRightTurnAnimVal by mutableStateOf(false)
 
     // 新增右侧扩展组件状态
     var islandRightDigit by mutableStateOf("5")
@@ -378,7 +336,7 @@ class NotificationState {
 class ActionState {
     var type by mutableStateOf("0") // "0" (圆形), "1" (进度), "2" (文字)
     var clickWithCollapse by mutableStateOf(false)
-    var actionWayIndex by mutableStateOf(0) // 0: 方式一, 1: 方式二
+    var actionWayIndex by mutableIntStateOf(0) // 0: 方式一, 1: 方式二
     var action by mutableStateOf("")
     
     // 方式二

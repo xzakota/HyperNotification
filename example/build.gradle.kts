@@ -26,6 +26,8 @@ android {
 
     buildFeatures {
         compose = true
+        aidl = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -58,6 +60,10 @@ dependencies {
 
     // HiddenApiBypass
     implementation(libs.hiddenapibypass)
+
+    // Shizuku
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
 
     // AppCompat and Material Components (for Theme.Material3 XML theme support)
     implementation("androidx.appcompat:appcompat:1.7.0")

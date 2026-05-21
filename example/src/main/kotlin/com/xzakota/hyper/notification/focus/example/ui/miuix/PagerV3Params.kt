@@ -8,25 +8,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.basic.Button
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.SmallTitle
-import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
-import top.yukonga.miuix.kmp.basic.FabPosition
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import com.xzakota.hyper.notification.focus.example.core.NotificationUtils
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
 
@@ -35,7 +26,6 @@ fun PagerV3Params(
     state: NotificationState,
     outerPadding: PaddingValues
 ) {
-    val context = LocalContext.current
     val topAppBarScrollBehavior = MiuixScrollBehavior()
 
     Scaffold(
@@ -76,11 +66,7 @@ fun PagerV3Params(
                     checked = state.enableIsland,
                     onCheckedChange = { 
                         state.enableIsland = it
-                        if (!it) {
-                            state.dismissIslandVal = true
-                        } else {
-                            state.dismissIslandVal = false
-                        }
+                        state.dismissIslandVal = !it
                     }
                 )
                 if (state.enableIsland) {

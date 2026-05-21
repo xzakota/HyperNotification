@@ -7,23 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.basic.Button
-import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.SmallTitle
-import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
-import top.yukonga.miuix.kmp.basic.FabPosition
-import com.xzakota.hyper.notification.focus.example.core.NotificationUtils
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
 
@@ -32,7 +23,6 @@ fun PagerV2Params(
     state: NotificationState,
     outerPadding: PaddingValues
 ) {
-    val context = LocalContext.current
     val topAppBarScrollBehavior = MiuixScrollBehavior()
 
     Scaffold(
@@ -77,6 +67,12 @@ fun PagerV2Params(
                     .padding(bottom = 12.dp)
                     .fillMaxWidth()
             ) {
+                SwitchPreference(
+                    title = "启用焦点通知",
+                    checked = state.isShowNotificationVal,
+                    onCheckedChange = { state.isShowNotificationVal = it },
+                    summary = "关闭后焦点通知仅作为超级岛展开态展示，如果只想保留超级岛，就把通知组件全改为none"
+                )
                 OverlayDropdownPreference(
                     title = "通知上方左侧组件",
                     items = coreStyles,
@@ -235,8 +231,6 @@ fun PagerV2Params(
                 )
             }
         }
-
-
     }
 }
 }
