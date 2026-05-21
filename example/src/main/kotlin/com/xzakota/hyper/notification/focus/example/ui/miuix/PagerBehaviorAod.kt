@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,13 +17,10 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import com.xzakota.hyper.notification.focus.example.ui.utils.BlurredBar
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
-import com.xzakota.hyper.notification.focus.example.ui.utils.rememberBlurBackdrop
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
 
 @Composable
@@ -32,19 +29,14 @@ fun PagerBehaviorAod(
     outerPadding: PaddingValues
 ) {
     val topAppBarScrollBehavior = MiuixScrollBehavior()
-    val backdrop = rememberBlurBackdrop()
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else MiuixTheme.colorScheme.surface
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop, blurActive) {
-                TopAppBar(
-                    color = barColor,
-                    title = "更多属性数据",
-                    scrollBehavior = topAppBarScrollBehavior,
-                )
-            }
+            TopAppBar(
+                color = MiuixTheme.colorScheme.surface,
+                title = "更多属性数据",
+                scrollBehavior = topAppBarScrollBehavior,
+            )
         }
     ) { innerPadding ->
         val contentPadding = pageContentPadding(
@@ -55,7 +47,7 @@ fun PagerBehaviorAod(
             extraEnd = 0.dp,
         )
 
-        Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
+        Box {
             LazyColumn(
                 modifier = Modifier.pageScrollModifiers(
                     enableScrollEndHaptic = true,

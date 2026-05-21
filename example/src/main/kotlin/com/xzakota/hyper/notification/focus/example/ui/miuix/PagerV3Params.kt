@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,14 +23,11 @@ import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.FabPosition
-import top.yukonga.miuix.kmp.blur.layerBackdrop
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import com.xzakota.hyper.notification.focus.example.core.NotificationUtils
-import com.xzakota.hyper.notification.focus.example.ui.utils.BlurredBar
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
-import com.xzakota.hyper.notification.focus.example.ui.utils.rememberBlurBackdrop
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
 
 @Composable
@@ -40,19 +37,14 @@ fun PagerV3Params(
 ) {
     val context = LocalContext.current
     val topAppBarScrollBehavior = MiuixScrollBehavior()
-    val backdrop = rememberBlurBackdrop()
-    val blurActive = backdrop != null
-    val barColor = if (blurActive) Color.Transparent else MiuixTheme.colorScheme.surface
 
     Scaffold(
         topBar = {
-            BlurredBar(backdrop, blurActive) {
-                TopAppBar(
-                    color = barColor,
-                    title = "超级岛参数",
-                    scrollBehavior = topAppBarScrollBehavior,
-                )
-            }
+            TopAppBar(
+                color = MiuixTheme.colorScheme.surface,
+                title = "超级岛参数",
+                scrollBehavior = topAppBarScrollBehavior,
+            )
         }
     ) { innerPadding ->
         val contentPadding = pageContentPadding(
@@ -63,7 +55,7 @@ fun PagerV3Params(
             extraEnd = 0.dp,
         )
 
-        Box(modifier = if (backdrop != null) Modifier.layerBackdrop(backdrop) else Modifier) {
+        Box {
             LazyColumn(
                 modifier = Modifier.pageScrollModifiers(
                     enableScrollEndHaptic = true,

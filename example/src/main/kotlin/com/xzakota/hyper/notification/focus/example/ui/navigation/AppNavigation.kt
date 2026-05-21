@@ -38,9 +38,9 @@ import top.yukonga.miuix.kmp.basic.NavigationBarItem
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.HorizontalSplit
-import top.yukonga.miuix.kmp.icon.extended.Create
-import top.yukonga.miuix.kmp.icon.extended.Image
-import top.yukonga.miuix.kmp.icon.extended.Settings
+import top.yukonga.miuix.kmp.icon.extended.VerticalSplit
+import top.yukonga.miuix.kmp.icon.extended.Notes
+import top.yukonga.miuix.kmp.icon.extended.GridView
 import top.yukonga.miuix.kmp.icon.extended.Send
 
 import androidx.compose.ui.platform.LocalContext
@@ -101,7 +101,7 @@ fun AppNavigation(startRoute: Route) {
                                     onClick = {
                                         mainPagerState.animateToPage(1)
                                     },
-                                    icon = MiuixIcons.Create,
+                                    icon = MiuixIcons.VerticalSplit,
                                     label = "焦点通知"
                                 )
                                 NavigationBarItem(
@@ -109,7 +109,7 @@ fun AppNavigation(startRoute: Route) {
                                     onClick = {
                                         mainPagerState.animateToPage(2)
                                     },
-                                    icon = MiuixIcons.Image,
+                                    icon = MiuixIcons.Notes,
                                     label = "超级岛"
                                 )
                                 NavigationBarItem(
@@ -117,8 +117,8 @@ fun AppNavigation(startRoute: Route) {
                                     onClick = {
                                         mainPagerState.animateToPage(3)
                                     },
-                                    icon = MiuixIcons.Settings,
-                                    label = "其他"
+                                    icon = MiuixIcons.GridView,
+                                    label = "更多"
                                 )
                             }
                         },
