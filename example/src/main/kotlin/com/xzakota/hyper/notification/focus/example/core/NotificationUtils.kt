@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 object NotificationUtils {
 
@@ -677,7 +678,7 @@ object NotificationUtils {
             val hasPermission = try {
                 ShizukuManager.isShizukuServiceRunning() &&
                 rikka.shizuku.Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED
-            } catch (e: Throwable) {
+            } catch (_: Throwable) {
                 false
             }
 
@@ -709,7 +710,7 @@ object NotificationUtils {
                 }
 
                 if (networkDisabled) {
-                    delay(100L)
+                    delay(100L.milliseconds)
                     try {
                         ShizukuManager.setXmsfNetworkingEnabled(context, true)
                         Log.d("NotificationUtils", "Successfully restored network for XMSF")

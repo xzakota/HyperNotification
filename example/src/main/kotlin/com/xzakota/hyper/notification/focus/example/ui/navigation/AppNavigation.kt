@@ -1,8 +1,6 @@
 package com.xzakota.hyper.notification.focus.example.ui.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
@@ -31,7 +29,6 @@ import com.xzakota.hyper.notification.focus.example.ui.miuix.PagerV3Params
 import com.xzakota.hyper.notification.focus.example.ui.miuix.PagerBehaviorAod
 
 import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.NavigationBar
 import top.yukonga.miuix.kmp.basic.NavigationBarItem
@@ -47,7 +44,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.graphics.Color
 import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.FabPosition
-import top.yukonga.miuix.kmp.basic.Text
 import com.xzakota.hyper.notification.focus.example.core.NotificationUtils
 import com.xzakota.hyper.notification.focus.example.ui.utils.rememberMainPagerState
 
