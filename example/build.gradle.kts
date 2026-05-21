@@ -59,6 +59,10 @@ dependencies {
     // HiddenApiBypass
     implementation(libs.hiddenapibypass)
 
+    // AppCompat and Material Components (for Theme.Material3 XML theme support)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+
     // Focus Notification API
     implementation(project(":focus-api"))
 }

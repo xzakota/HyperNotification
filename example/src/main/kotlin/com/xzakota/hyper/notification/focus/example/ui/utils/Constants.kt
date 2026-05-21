@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.utils
+package com.xzakota.hyper.notification.focus.example.ui.utils
 
 object Constants {
     const val PREF_NAME = "com.xzakota.hyper.notification.focus.example_preferences"
@@ -15,7 +15,7 @@ object Constants {
     const val DEFAULT_SETUP_COMPLETED = false
     const val DEFAULT_THEME_MODE = 0
     const val DEFAULT_MONET_COLOR = 0
-    const val DEFAULT_PREDICTIVE_BACK_GESTURE = false
+    const val DEFAULT_PREDICTIVE_BACK_GESTURE = true
     const val DEFAULT_FLOATING_NAV_BAR = false
     const val DEFAULT_EXCLUDE_FROM_RECENTS = false
 }

@@ -6,7 +6,8 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
-        android:theme="@style/Theme.FocusNotify">
+        android:theme="@style/Theme.FocusNotify"
+        android:enableOnBackInvokedCallback="true">
         <activity
             android:name="com.xzakota.hyper.notification.focus.example.ui.MainActivity"
             android:exported="true">

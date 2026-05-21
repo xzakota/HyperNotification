@@ -1,9 +1,10 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui
+package com.xzakota.hyper.notification.focus.example.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.xzakota.hyper.notification.focus.example.R
 import com.xzakota.hyper.notification.focus.example.ui.utils.Constants
 import com.xzakota.hyper.notification.focus.example.ui.navigation.AppNavigation
 import com.xzakota.hyper.notification.focus.example.ui.navigation.Route
