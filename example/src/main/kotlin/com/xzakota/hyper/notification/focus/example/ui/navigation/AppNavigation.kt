@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.navigation
+package com.xzakota.hyper.notification.focus.example.ui.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +17,12 @@ import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import android.content.pm.PackageManager
+import android.Manifest
+import android.widget.Toast
 import androidx.compose.runtime.LaunchedEffect
 import com.xzakota.hyper.notification.focus.example.ui.miuix.NotificationState
 import com.xzakota.hyper.notification.focus.example.ui.miuix.PagerNormalNotification
@@ -67,6 +73,17 @@ fun AppNavigation(startRoute: Route) {
                     val scope = rememberCoroutineScope()
                     val context = LocalContext.current
 
+                    val permissionLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.RequestPermission(),
+                        onResult = { isGranted ->
+                            if (isGranted) {
+                                NotificationUtils.sendBaseInfoNotification(context, notificationState)
+                            } else {
+                                Toast.makeText(context, "需要通知权限以发送通知", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    )
+
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         bottomBar = {
@@ -108,7 +125,16 @@ fun AppNavigation(startRoute: Route) {
                         floatingActionButton = {
                             FloatingActionButton(
                                 onClick = {
-                                    NotificationUtils.sendBaseInfoNotification(context, notificationState)
+                                    val isPermissionGranted = ContextCompat.checkSelfPermission(
+                                        context,
+                                        Manifest.permission.POST_NOTIFICATIONS
+                                    ) == PackageManager.PERMISSION_GRANTED
+
+                                    if (isPermissionGranted) {
+                                        NotificationUtils.sendBaseInfoNotification(context, notificationState)
+                                    } else {
+                                        permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                                    }
                                 }
                             ) {
                                 Icon(
