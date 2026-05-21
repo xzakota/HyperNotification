@@ -60,24 +60,48 @@ object ImagePickerAndProcessor {
 
             if (originalBitmap == null) return null
 
-            // 1. 等比例居中裁剪 (Center-Crop) 缩放至目标规格像素大小
-            val croppedBitmap = centerCropAndScale(originalBitmap, spec.width, spec.height)
-            if (croppedBitmap != originalBitmap) {
-                originalBitmap.recycle()
-            }
+            val finalBitmap: Bitmap
+            if (spec == ImageSpec.BG_PIC_BG) {
+                // 仅压缩图片，不对它进行裁剪，也不切圆角。系统会自动处理拉伸铺满。
+                val maxDimension = 720
+                val width = originalBitmap.width
+                val height = originalBitmap.height
+                if (width > maxDimension || height > maxDimension) {
+                    val ratio = width.toFloat() / height
+                    val targetW: Int
+                    val targetH: Int
+                    if (width > height) {
+                        targetW = maxDimension
+                        targetH = (maxDimension / ratio).toInt()
+                    } else {
+                        targetH = maxDimension
+                        targetW = (maxDimension * ratio).toInt()
+                    }
+                    finalBitmap = Bitmap.createScaledBitmap(originalBitmap, targetW, targetH, true)
+                    originalBitmap.recycle()
+                } else {
+                    finalBitmap = originalBitmap
+                }
+            } else {
+                // 1. 等比例居中裁剪 (Center-Crop) 缩放至目标规格像素大小
+                val croppedBitmap = centerCropAndScale(originalBitmap, spec.width, spec.height)
+                if (croppedBitmap != originalBitmap) {
+                    originalBitmap.recycle()
+                }
 
-            // 2. 取短边尺寸 1/4 作为优雅圆角数值进行 Bitmap 透明圆角截取
-            val shortSide = min(spec.width, spec.height)
-            val cornerRadius = shortSide / 4f
-            val roundedBitmap = getRoundedCornerBitmap(croppedBitmap, cornerRadius)
-            croppedBitmap.recycle()
+                // 2. 取短边尺寸 1/4 作为优雅圆角数值进行 Bitmap 透明圆角截取
+                val shortSide = min(spec.width, spec.height)
+                val cornerRadius = shortSide / 4f
+                finalBitmap = getRoundedCornerBitmap(croppedBitmap, cornerRadius)
+                croppedBitmap.recycle()
+            }
 
             // 3. 转存至 App 私有 cache 目录
             val cacheFile = File(context.cacheDir, fileName)
             FileOutputStream(cacheFile).use { out ->
-                roundedBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
             }
-            roundedBitmap.recycle()
+            finalBitmap.recycle()
 
             Log.d("ImagePickerAndProcessor", "Successfully processed image to ${cacheFile.absolutePath}")
             cacheFile.absolutePath
