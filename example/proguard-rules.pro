@@ -1,21 +1,32 @@
 # Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
+# By default, the flags in this file are appended to flags specified
+# in C:\Users\30307\.gemini\antigravity\sdk/tools/proguard/proguard-android.txt
+# You can edit the include path and value by changing the proguardFiles
+# directive in build.gradle.kts.
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Add any custom rules here to keep classes, methods or fields that should not be obfuscated.
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep Compose and Kotlin internals
+-keepclassmembers class * {
+    @androidx.compose.runtime.Composable *;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep Kotlinx Serialization if used
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
+
+# Keep focus-api classes
+-keep class com.xzakota.hyper.notification.focus.example.api.** { *; }
+-keep class com.xzakota.hyper.notification.focus.example.core.** { *; }
+
+# Keep AIDL interfaces and their generated stub/proxy classes
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedService { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedService$** { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedLogCallback { *; }
+-keep class com.xzakota.hyper.notification.focus.example.IPrivilegedLogCallback$** { *; }
+
+# Keep Shizuku SDK classes and methods used via reflection/IPC
+-keep class rikka.shizuku.** { *; }
+-keep interface rikka.shizuku.** { *; }
