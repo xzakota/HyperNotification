@@ -22,6 +22,8 @@ import top.yukonga.miuix.kmp.theme.MiuixTheme
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageContentPadding
 import com.xzakota.hyper.notification.focus.example.ui.utils.pageScrollModifiers
 
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
+
 @Composable
 fun PagerBehaviorAod(
     state: NotificationState,
@@ -135,11 +137,12 @@ fun PagerBehaviorAod(
                             label = "aodTitle (息屏焦点通知显示文案)",
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
                         )
-                        TextField(
-                            value = state.aodPicText,
-                            onValueChange = { state.aodPicText = it },
-                            label = "aodPic (息屏模式图标，不传入默认为应用图标)",
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                        ImagePickerPreference(
+                            title = "aodPic",
+                            summary = "息屏模式图标 (建议 88*88px)",
+                            imageSpec = ImagePickerAndProcessor.ImageSpec.AOD_PIC,
+                            currentPath = state.aodPicText,
+                            onPathChange = { state.aodPicText = it }
                         )
                     }
                 }
@@ -159,17 +162,19 @@ fun PagerBehaviorAod(
                             label = "ticker (OS2 焦点通知状态栏显示文案)",
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
                         )
-                        TextField(
-                            value = state.tickerPicText,
-                            onValueChange = { state.tickerPicText = it },
-                            label = "tickerPic (OS2 焦点通知状态栏图标，不传默认为应用图标)",
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                        ImagePickerPreference(
+                            title = "tickerPic",
+                            summary = "状态栏图标 (建议 88*88px)",
+                            imageSpec = ImagePickerAndProcessor.ImageSpec.TICKER_PIC,
+                            currentPath = state.tickerPicText,
+                            onPathChange = { state.tickerPicText = it }
                         )
-                        TextField(
-                            value = state.tickerPicDark,
-                            onValueChange = { state.tickerPicDark = it },
-                            label = "tickerPicDark (暗黑模式下图标)",
-                            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                        ImagePickerPreference(
+                            title = "tickerPicDark",
+                            summary = "深色状态栏图标 (建议 88*88px)",
+                            imageSpec = ImagePickerAndProcessor.ImageSpec.TICKER_PIC,
+                            currentPath = state.tickerPicDark,
+                            onPathChange = { state.tickerPicDark = it }
                         )
                     }
                 }

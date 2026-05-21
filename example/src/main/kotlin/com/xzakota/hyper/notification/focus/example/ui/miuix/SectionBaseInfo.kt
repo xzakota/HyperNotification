@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.SwitchPreference
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionBaseInfo(
@@ -208,11 +210,12 @@ fun SectionBaseInfo(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.basePicFunction,
-                onValueChange = { state.basePicFunction = it },
-                label = "picFunction (资源标识)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picFunction",
+                summary = "资源标识 (建议 80*80px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.BASE_PIC_FUNCTION,
+                currentPath = state.basePicFunction,
+                onPathChange = { state.basePicFunction = it }
             )
             TextField(
                 value = state.businessText,

@@ -4,12 +4,15 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import org.json.JSONObject
 import com.xzakota.hyper.notification.focus.example.ui.miuix.NotificationState
 import com.xzakota.hyper.notification.focus.example.core.shizuku.ShizukuManager
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -670,8 +673,18 @@ object NotificationUtils {
             put("param_v2", paramV2Json)
         }
 
+        val picsBundle = Bundle()
+        extractAndReplaceImagePaths(paramJson, picsBundle)
+
+        val paramJsonString = paramJson.toString()
+        Log.d("NotificationUtils", "Final JSON Payload: $paramJsonString")
+
         val bundle = Bundle().apply {
-            putString("miui.focus.param", paramJson.toString())
+            putString("miui.focus.param", paramJsonString)
+            if (!picsBundle.isEmpty) {
+                putBundle("miui.focus.pics", picsBundle)
+                Log.d("NotificationUtils", "Put pics bundle with ${picsBundle.size()} items")
+            }
         }
 
         if (state.bypassFocusLimit) {
@@ -749,5 +762,45 @@ object NotificationUtils {
 
         val notification = builder.build()
         manager.notify(System.currentTimeMillis().toInt(), notification)
+    }
+
+    private fun extractAndReplaceImagePaths(json: JSONObject, picsBundle: Bundle) {
+        val keys = json.keys()
+        while (keys.hasNext()) {
+            val key = keys.next()
+            if (json.isNull(key)) continue
+            when (val value = json.get(key)) {
+                is String -> {
+                    if (value.isNotEmpty() && value.startsWith("/")) {
+                        val uuid = UUID.randomUUID().toString().substring(0, 8)
+                        val picKey = "miui.focus.pic_${key}_$uuid"
+                        try {
+                            val bitmap = BitmapFactory.decodeFile(value)
+                            if (bitmap != null) {
+                                val icon = Icon.createWithBitmap(bitmap)
+                                picsBundle.putParcelable(picKey, icon)
+                                json.put(key, picKey)
+                                Log.d("NotificationUtils", "Successfully loaded bitmap from $value and replaced with key: $picKey")
+                            } else {
+                                Log.e("NotificationUtils", "Failed to decode bitmap from path: $value")
+                            }
+                        } catch (e: Throwable) {
+                            Log.e("NotificationUtils", "Failed to create Icon for path: $value", e)
+                        }
+                    }
+                }
+                is JSONObject -> {
+                    extractAndReplaceImagePaths(value, picsBundle)
+                }
+                is org.json.JSONArray -> {
+                    for (i in 0 until value.length()) {
+                        val item = value.opt(i)
+                        if (item is JSONObject) {
+                            extractAndReplaceImagePaths(item, picsBundle)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionPicInfo(
@@ -45,17 +47,25 @@ fun SectionPicInfo(
                 }
             )
 
-            TextField(
-                value = state.pic,
-                onValueChange = { state.pic = it },
-                label = "pic (应用图标 / 功能图标 / 图片)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            val spec = when (state.picType) {
+                "2" -> ImagePickerAndProcessor.ImageSpec.PIC_INFO_TYPE_2
+                "3" -> ImagePickerAndProcessor.ImageSpec.PIC_INFO_TYPE_3
+                else -> ImagePickerAndProcessor.ImageSpec.PIC_INFO_TYPE_1_5
+            }
+
+            ImagePickerPreference(
+                title = "pic",
+                summary = "图片 (基于Type: ${spec.width}*${spec.height}px)",
+                imageSpec = spec,
+                currentPath = state.pic,
+                onPathChange = { state.pic = it }
             )
-            TextField(
-                value = state.picDark,
-                onValueChange = { state.picDark = it },
-                label = "picDark (深色图片资源)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picDark",
+                summary = "深色图片 (基于Type: ${spec.width}*${spec.height}px)",
+                imageSpec = spec,
+                currentPath = state.picDark,
+                onPathChange = { state.picDark = it }
             )
 
             if (state.picType != "5") {

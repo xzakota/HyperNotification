@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +13,8 @@ import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionActionInfo(
@@ -86,17 +88,19 @@ fun SectionActionInfo(
                     .padding(bottom = 12.dp)
                     .fillMaxWidth()
             ) {
-                TextField(
-                    value = state.actionIcon,
-                    onValueChange = { state.actionIcon = it },
-                    label = "actionIcon (按钮图标 Key/URI)",
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                ImagePickerPreference(
+                    title = "actionIcon",
+                    summary = "按钮图标 (建议 96*96px)",
+                    imageSpec = ImagePickerAndProcessor.ImageSpec.ACTION_ICON,
+                    currentPath = state.actionIcon,
+                    onPathChange = { state.actionIcon = it }
                 )
-                TextField(
-                    value = state.actionIconDark,
-                    onValueChange = { state.actionIconDark = it },
-                    label = "actionIconDark (暗色按钮图标)",
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                ImagePickerPreference(
+                    title = "actionIconDark",
+                    summary = "深色模式按钮图标 (建议 96*96px)",
+                    imageSpec = ImagePickerAndProcessor.ImageSpec.ACTION_ICON,
+                    currentPath = state.actionIconDark,
+                    onPathChange = { state.actionIconDark = it }
                 )
                 TextField(
                     value = state.actionTitle,

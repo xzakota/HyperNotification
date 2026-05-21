@@ -41,7 +41,7 @@ fun PagerNormalNotification(
         val binderDeadListener = Shizuku.OnBinderDeadListener {
             state.bypassFocusLimit = false
             Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "Shizuku 服务已死亡，绕过已关闭", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "shizuku 服务已停止，绕过已关闭", Toast.LENGTH_SHORT).show()
             }
         }
         if (ShizukuManager.isShizukuServiceRunning()) {
@@ -54,7 +54,7 @@ fun PagerNormalNotification(
         ShizukuManager.onServiceDisconnectedCallback = {
             state.bypassFocusLimit = false
             Handler(Looper.getMainLooper()).post {
-                Toast.makeText(context, "检测到 Shizuku 服务离线，绕过选项已自动回退关闭", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "shizuku 服务离线，绕过已关闭", Toast.LENGTH_SHORT).show()
             }
         }
 

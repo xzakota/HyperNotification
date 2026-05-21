@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionIconTextInfo(
@@ -31,17 +33,19 @@ fun SectionIconTextInfo(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
             )
-            TextField(
-                value = state.iconTextSrc,
-                onValueChange = { state.iconTextSrc = it },
-                label = "src (资源)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "src",
+                summary = "图片资源 (建议 224*224px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.ICON_TEXT_SRC,
+                currentPath = state.iconTextSrc,
+                onPathChange = { state.iconTextSrc = it }
             )
-            TextField(
-                value = state.iconTextSrcDark,
-                onValueChange = { state.iconTextSrcDark = it },
-                label = "srcDark (深色模式资源)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "srcDark",
+                summary = "深色模式图片资源 (建议 224*224px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.ICON_TEXT_SRC,
+                currentPath = state.iconTextSrcDark,
+                onPathChange = { state.iconTextSrcDark = it }
             )
         }
 

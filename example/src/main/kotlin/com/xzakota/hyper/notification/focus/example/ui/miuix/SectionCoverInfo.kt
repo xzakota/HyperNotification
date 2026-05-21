@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionCoverInfo(
@@ -22,11 +24,12 @@ fun SectionCoverInfo(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.coverPicCover,
-                onValueChange = { state.coverPicCover = it },
-                label = "picCover",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picCover",
+                summary = "封面图 (建议 224*288px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.COVER_PIC_COVER,
+                currentPath = state.coverPicCover,
+                onPathChange = { state.coverPicCover = it }
             )
         }
 

@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +10,8 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.SwitchPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionImageTextInfoRight(
@@ -27,11 +29,12 @@ fun SectionImageTextInfoRight(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.islandRightPic,
-                onValueChange = { state.islandRightPic = it },
-                label = "pic (图标)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "pic",
+                summary = "图标 (建议 128*88px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.ISLAND_RIGHT_PIC,
+                currentPath = state.islandRightPic,
+                onPathChange = { state.islandRightPic = it }
             )
             if (!isStyle3) {
                 TextField(

@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +10,8 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionChatInfo(
@@ -23,23 +25,26 @@ fun SectionChatInfo(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.chatPicProfile,
-                onValueChange = { state.chatPicProfile = it },
-                label = "picProfile (头像类图片 URI / Key)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picProfile",
+                summary = "头像类图片 (建议 224*224px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.CHAT_PIC_PROFILE,
+                currentPath = state.chatPicProfile,
+                onPathChange = { state.chatPicProfile = it }
             )
-            TextField(
-                value = state.chatPicProfileDark,
-                onValueChange = { state.chatPicProfileDark = it },
-                label = "picProfileDark (深色模式图片)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picProfileDark",
+                summary = "深色头像类图片 (建议 224*224px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.CHAT_PIC_PROFILE,
+                currentPath = state.chatPicProfileDark,
+                onPathChange = { state.chatPicProfileDark = it }
             )
-            TextField(
-                value = state.chatAppIconPkg,
-                onValueChange = { state.chatAppIconPkg = it },
-                label = "appIconPkg (自定义应用图标)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "appIconPkg",
+                summary = "自定义应用图标 (建议 96*96px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.CHAT_APP_ICON_PKG,
+                currentPath = state.chatAppIconPkg,
+                onPathChange = { state.chatAppIconPkg = it }
             )
         }
 

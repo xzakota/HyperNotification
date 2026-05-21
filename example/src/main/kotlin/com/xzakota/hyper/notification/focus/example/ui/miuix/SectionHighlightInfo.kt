@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +10,8 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionHighlightInfo(
@@ -23,17 +25,19 @@ fun SectionHighlightInfo(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.highlightPicFunction,
-                onValueChange = { state.highlightPicFunction = it },
-                label = "picFunction (功能图标 URI / Key)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picFunction",
+                summary = "功能图标 (建议 96*96px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.HIGHLIGHT_PIC_FUNCTION,
+                currentPath = state.highlightPicFunction,
+                onPathChange = { state.highlightPicFunction = it }
             )
-            TextField(
-                value = state.highlightPicFunctionDark,
-                onValueChange = { state.highlightPicFunctionDark = it },
-                label = "picFunctionDark (深色模式功能图标)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picFunctionDark",
+                summary = "深色模式功能图标 (建议 96*96px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.HIGHLIGHT_PIC_FUNCTION,
+                currentPath = state.highlightPicFunctionDark,
+                onPathChange = { state.highlightPicFunctionDark = it }
             )
         }
 

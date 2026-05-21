@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionHintInfo(
@@ -200,11 +202,12 @@ fun SectionHintInfo(
                     label = "colorContentBg (图文特殊标签背景色 Hex)",
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
                 )
-                TextField(
-                    value = state.hintPicContent,
-                    onValueChange = { state.hintPicContent = it },
-                    label = "picContent (图文特殊标签图标 Key/URI)",
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                ImagePickerPreference(
+                    title = "picContent",
+                    summary = "图文特殊标签图标 (建议 96*96px)",
+                    imageSpec = ImagePickerAndProcessor.ImageSpec.HINT_PIC_CONTENT,
+                    currentPath = state.hintPicContent,
+                    onPathChange = { state.hintPicContent = it }
                 )
             }
         }

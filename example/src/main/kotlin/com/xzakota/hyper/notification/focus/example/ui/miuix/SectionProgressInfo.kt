@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionProgressInfo(
@@ -52,35 +54,40 @@ fun SectionProgressInfo(
                 .padding(bottom = 12.dp)
                 .fillMaxWidth()
         ) {
-            TextField(
-                value = state.picForward,
-                onValueChange = { state.picForward = it },
-                label = "picForward (前进移动图形 Key/URI)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picForward",
+                summary = "前进移动图形 (建议 240*188px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.PROGRESS_FORWARD,
+                currentPath = state.picForward,
+                onPathChange = { state.picForward = it }
             )
-            TextField(
-                value = state.picMiddle,
-                onValueChange = { state.picMiddle = it },
-                label = "picMiddle (中点图形 - 进度通过)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picMiddle",
+                summary = "中点图形 - 已通过 (建议 120*188px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.PROGRESS_MIDDLE_END,
+                currentPath = state.picMiddle,
+                onPathChange = { state.picMiddle = it }
             )
-            TextField(
-                value = state.picMiddleUnselected,
-                onValueChange = { state.picMiddleUnselected = it },
-                label = "picMiddleUnselected (中点图形 - 未通过)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picMiddleUnselected",
+                summary = "中点图形 - 未通过 (建议 120*188px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.PROGRESS_MIDDLE_END,
+                currentPath = state.picMiddleUnselected,
+                onPathChange = { state.picMiddleUnselected = it }
             )
-            TextField(
-                value = state.picEnd,
-                onValueChange = { state.picEnd = it },
-                label = "picEnd (终点图形 - 进度通过)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picEnd",
+                summary = "终点图形 - 已通过 (建议 120*188px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.PROGRESS_MIDDLE_END,
+                currentPath = state.picEnd,
+                onPathChange = { state.picEnd = it }
             )
-            TextField(
-                value = state.picEndUnselected,
-                onValueChange = { state.picEndUnselected = it },
-                label = "picEndUnselected (终点图形 - 未通过)",
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+            ImagePickerPreference(
+                title = "picEndUnselected",
+                summary = "终点图形 - 未通过 (建议 120*188px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.PROGRESS_MIDDLE_END,
+                currentPath = state.picEndUnselected,
+                onPathChange = { state.picEndUnselected = it }
             )
         }
     }

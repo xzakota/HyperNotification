@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +15,8 @@ import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionActions(
@@ -106,17 +108,19 @@ fun SectionActions(
                     }
                 } else {
                     SmallTitle(text = "方式二：自定义动作")
-                    TextField(
-                        value = actionState.actionIcon,
-                        onValueChange = { actionState.actionIcon = it },
-                        label = "actionIcon (按钮图标 Key/URI)",
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                    ImagePickerPreference(
+                        title = "actionIcon",
+                        summary = "按钮图标 (建议 96*96px)",
+                        imageSpec = ImagePickerAndProcessor.ImageSpec.ACTION_ICON,
+                        currentPath = actionState.actionIcon,
+                        onPathChange = { actionState.actionIcon = it }
                     )
-                    TextField(
-                        value = actionState.actionIconDark,
-                        onValueChange = { actionState.actionIconDark = it },
-                        label = "actionIconDark (暗色按钮图标)",
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp)
+                    ImagePickerPreference(
+                        title = "actionIconDark",
+                        summary = "深色模式按钮图标 (建议 96*96px)",
+                        imageSpec = ImagePickerAndProcessor.ImageSpec.ACTION_ICON,
+                        currentPath = actionState.actionIconDark,
+                        onPathChange = { actionState.actionIconDark = it }
                     )
                     TextField(
                         value = actionState.actionTitle,

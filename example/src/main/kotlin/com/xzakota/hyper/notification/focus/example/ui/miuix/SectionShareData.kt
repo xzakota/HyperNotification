@@ -1,4 +1,4 @@
-﻿package com.xzakota.hyper.notification.focus.example.ui.miuix
+package com.xzakota.hyper.notification.focus.example.ui.miuix
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.TextField
+
+import com.xzakota.hyper.notification.focus.example.core.ImagePickerAndProcessor
 
 @Composable
 fun SectionShareData(
@@ -43,11 +45,12 @@ fun SectionShareData(
                 label = "content (拖拽卡文案描述)",
                 modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
             )
-            TextField(
-                value = sharePic,
-                onValueChange = onSharePicChange,
-                label = "pic (拖拽时卡片上的展示图片 Key/URI)",
-                modifier = Modifier.fillMaxWidth().padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+            ImagePickerPreference(
+                title = "pic",
+                summary = "拖拽时卡片上的展示图片 (建议 224*224px)",
+                imageSpec = ImagePickerAndProcessor.ImageSpec.SHARE_PIC,
+                currentPath = sharePic,
+                onPathChange = onSharePicChange
             )
             TextField(
                 value = shareContentText,
