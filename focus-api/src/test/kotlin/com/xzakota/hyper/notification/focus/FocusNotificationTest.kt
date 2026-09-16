@@ -36,6 +36,8 @@ class FocusNotificationTest {
         }
 
         val json = config.getFactoryJSON()
+        println(json)
+
         assertNotNull(json)
         assertTrue(json.contains("Title1"))
         assertTrue(json.contains("Title2"))
@@ -81,6 +83,8 @@ class FocusNotificationTest {
         }
 
         val json = config.getFactoryJSON()
+        println(json)
+
         assertNotNull(json)
         assertTrue(json.contains("Title1"))
         assertTrue(json.contains("param_island"))
@@ -106,5 +110,16 @@ class FocusNotificationTest {
         assertEquals(true, dest.enableFloat)
         assertEquals("Test Business", dest.business)
         assertEquals("Original Title", dest.baseInfo?.title)
+    }
+
+    @Test
+    fun standaloneCreatePictureTest() {
+        val template = FocusTemplateV3().apply {
+            ticker = "Test Ticker"
+            val key = createPicture("key_logo", android.os.Bundle())
+            tickerPic = key
+        }
+
+        assertEquals("key_logo", template.tickerPic)
     }
 }

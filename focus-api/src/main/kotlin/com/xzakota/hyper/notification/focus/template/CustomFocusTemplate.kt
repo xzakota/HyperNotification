@@ -1,5 +1,6 @@
 package com.xzakota.hyper.notification.focus.template
 
+import android.os.Bundle
 import android.widget.RemoteViews
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -8,12 +9,21 @@ import kotlinx.serialization.Transient
 @Serializable
 open class CustomFocusTemplate : BaseFocusTemplate() {
     @Transient
-    internal var rv = mutableMapOf<String, RemoteViews?>()
+    private var viewMap : MutableMap<String, RemoteViews?>? = null
+
+    internal fun handleRemoteViewsIn(bundle: Bundle) = with(bundle) {
+        viewMap?.forEach { (k, v) ->
+            putParcelable(k, v)
+        }
+    }
 
     fun createRemoteViews(key : String, value : RemoteViews?) {
-        if (value != null) {
-            rv[key] = value
+        if (value == null) {
+            return
         }
+
+        val map = viewMap ?: mutableMapOf<String, RemoteViews?>().also { viewMap = it }
+        map[key] = value
     }
 
     companion object {

@@ -2,10 +2,13 @@
 
 package com.xzakota.hyper.notification.focus.template
 
+import android.os.Bundle
 import android.os.Parcelable
-import com.xzakota.hyper.notification.focus.FocusNotification
+import com.xzakota.hyper.notification.focus.extension.buildBundle
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 @Serializable
 open class BaseFocusTemplate internal constructor() {
@@ -73,15 +76,54 @@ open class BaseFocusTemplate internal constructor() {
     var filterWhenNoPermission : Boolean? = null
 
     @Transient
-    internal lateinit var notification : FocusNotification
+    private var pictureMap : MutableMap<String, Parcelable?>? = null
 
-    @PublishedApi
-    internal fun configWith(notification : FocusNotification) {
-        this.notification = notification
+    @Transient
+    private var actionMap : MutableMap<String, Parcelable?>? = null
+
+    internal inline fun handlePictures(crossinline block: (Bundle) -> Unit) {
+        val map = pictureMap
+        if (map.isNullOrEmpty()) {
+            return
+        }
+
+        block(buildBundle {
+            map.forEach { (k, v) ->
+                putParcelable(k, v)
+            }
+        })
     }
 
-    fun createPicture(key : String, value : Parcelable) : String = notification.createPicture(key, value)
-    fun createAction(key : String, value : Parcelable) : String = notification.createAction(key, value)
+    internal inline fun handleActions(crossinline block: (Bundle) -> Unit) {
+        val map = actionMap
+        if (map.isNullOrEmpty()) {
+            return
+        }
+
+        block(buildBundle {
+            map.forEach { (k, v) ->
+                putParcelable(k, v)
+            }
+        })
+    }
+
+    fun createPicture(key : String, value : Parcelable?) : String = key.also {
+        if (value == null) {
+            return@also
+        }
+
+        val map = pictureMap ?: mutableMapOf<String, Parcelable?>().also { m -> pictureMap = m }
+        map[key] = value
+    }
+
+    fun createAction(key : String, value : Parcelable?) : String = key.also {
+        if (value == null) {
+            return@also
+        }
+
+        val map = actionMap ?: mutableMapOf<String, Parcelable?>().also { m -> actionMap = m }
+        map[key] = value
+    }
 
     open fun copyFrom(from : Any) {
         if (from is BaseFocusTemplate) {
