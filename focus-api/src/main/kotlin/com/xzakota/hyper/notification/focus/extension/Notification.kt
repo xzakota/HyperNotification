@@ -7,6 +7,7 @@ import com.xzakota.hyper.notification.focus.FocusNotification
 import com.xzakota.hyper.notification.focus.template.CustomFocusTemplate
 import com.xzakota.hyper.notification.focus.template.CustomFocusTemplateV3
 import com.xzakota.hyper.notification.focus.template.FocusTemplate
+import com.xzakota.hyper.notification.focus.template.FocusTemplateV3
 
 @JvmSynthetic
 fun FocusNotification.buildIn(n : Notification) {
@@ -29,9 +30,9 @@ fun Notification.addCustomFocusParamV2(
 
 @JvmSynthetic
 fun Notification.addFocusParamV3(
-    block : FocusTemplate.() -> Unit
+    block : FocusTemplateV3.() -> Unit
 ) : Notification = apply {
-    extras.putAll(FocusNotification.buildV2(block))
+    extras.putAll(FocusNotification.buildV3(block))
 }
 
 @JvmSynthetic
