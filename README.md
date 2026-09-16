@@ -1,6 +1,6 @@
 # Hyper Notification
 [![GitHub License](https://img.shields.io/github/license/xzakota/HyperNotification?color=blue)](https://github.com/xzakota/HyperNotification/blob/main/LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/com.xzakota.hyper.notification?color=green)](https://search.maven.org/search?q=g:com.xzakota.hyper.notification)
+[![Maven Central](https://img.shields.io/maven-central/v/com.xzakota.hyper.notification/focus-api?color=green)](https://search.maven.org/search?q=g:com.xzakota.hyper.notification)
 
 > 封装小米澎湃 OS (HyperOS) 焦点通知 (V2) 与超级岛 (V3) 的 Kotlin 类型安全构建库
 
