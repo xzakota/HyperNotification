@@ -7,7 +7,6 @@ import com.xzakota.hyper.notification.island.model.BigIslandArea
 import com.xzakota.hyper.notification.island.model.ShareData
 import com.xzakota.hyper.notification.island.model.SmallIslandArea
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @FocusNotificationDsl
 @Serializable
@@ -70,25 +69,16 @@ class IslandTemplate {
      */
     var shareData : ShareData? = null
 
-    fun smallIslandArea(consumer : Consumer<SmallIslandArea>) = smallIslandArea(consumer::accept)
-
-    @JvmSynthetic
     fun smallIslandArea(block : SmallIslandArea.() -> Unit) {
         val info = smallIslandArea ?: SmallIslandArea().also { smallIslandArea = it }
         info.apply(block)
     }
 
-    fun bigIslandArea(consumer : Consumer<BigIslandArea>) = bigIslandArea(consumer::accept)
-
-    @JvmSynthetic
     fun bigIslandArea(block : BigIslandArea.() -> Unit) {
         val info = bigIslandArea ?: BigIslandArea().also { bigIslandArea = it }
         info.apply(block)
     }
 
-    fun shareData(consumer : Consumer<ShareData>) = shareData(consumer::accept)
-
-    @JvmSynthetic
     fun shareData(block : ShareData.() -> Unit) {
         val info = shareData ?: ShareData().also { shareData = it }
         info.apply(block)
@@ -101,9 +91,6 @@ internal interface IIslandTemplateCreator {
      */
     var island : IslandTemplate?
 
-    fun island(consumer : Consumer<IslandTemplate>) = island(consumer::accept)
-
-    @JvmSynthetic
     fun island(block : IslandTemplate.() -> Unit) {
         val info = island ?: IslandTemplate().also { island = it }
         info.apply(block)

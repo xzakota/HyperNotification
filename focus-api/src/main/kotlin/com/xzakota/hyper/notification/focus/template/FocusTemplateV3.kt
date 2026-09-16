@@ -12,7 +12,6 @@ import com.xzakota.hyper.notification.island.template.IIslandTemplateCreator
 import com.xzakota.hyper.notification.island.template.IslandTemplate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @Serializable
 class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
@@ -65,49 +64,31 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
         reflectCollect(from, FocusTemplateV3::class.java)
     }
 
-    fun coverInfo(consumer : Consumer<CoverInfo>) = coverInfo(consumer::accept)
-
-    @JvmSynthetic
     fun coverInfo(block : CoverInfo.() -> Unit) {
         val info = coverInfo ?: CoverInfo().also { coverInfo = it }
         info.apply(block)
     }
 
-    fun highlightInfoV3(consumer : Consumer<HighlightInfoV3>) = highlightInfoV3(consumer::accept)
-
-    @JvmSynthetic
     fun highlightInfoV3(block : HighlightInfoV3.() -> Unit) {
         val info = highlightInfoV3 ?: HighlightInfoV3().also { highlightInfoV3 = it }
         info.apply(block)
     }
 
-    fun iconTextInfo(consumer : Consumer<IconTextInfo>) = iconTextInfo(consumer::accept)
-
-    @JvmSynthetic
     fun iconTextInfo(block : IconTextInfo.() -> Unit) {
         val info = iconTextInfo ?: IconTextInfo().also { iconTextInfo = it }
         info.apply(block)
     }
 
-    fun multiProgressInfo(consumer : Consumer<MultiProgressInfo>) = multiProgressInfo(consumer::accept)
-
-    @JvmSynthetic
     fun multiProgressInfo(block : MultiProgressInfo.() -> Unit) {
         val info = multiProgressInfo ?: MultiProgressInfo().also { multiProgressInfo = it }
         info.apply(block)
     }
 
-    fun animTextInfo(consumer : Consumer<AnimTextInfo>) = animTextInfo(consumer::accept)
-
-    @JvmSynthetic
     fun animTextInfo(block : AnimTextInfo.() -> Unit) {
         val info = animTextInfo ?: AnimTextInfo().also { animTextInfo = it }
         info.apply(block)
     }
 
-    fun textButton(consumer : Consumer<ArrayList<ActionInfo>>) = textButton(consumer::accept)
-
-    @JvmSynthetic
     fun textButton(block : ArrayList<ActionInfo>.() -> Unit) {
         val info = textButton ?: arrayListOf<ActionInfo>().also { textButton = it }
         info.apply(block)

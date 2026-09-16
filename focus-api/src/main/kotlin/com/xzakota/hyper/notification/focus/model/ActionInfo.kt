@@ -4,7 +4,6 @@ package com.xzakota.hyper.notification.focus.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @FocusNotificationDsl
 @Serializable
@@ -59,9 +58,6 @@ internal interface IActionInfoCreator {
      */
     var actionInfo : ActionInfo?
 
-    fun actionInfo(consumer : Consumer<ActionInfo>) = actionInfo(consumer::accept)
-
-    @JvmSynthetic
     fun actionInfo(block : ActionInfo.() -> Unit) {
         val info = actionInfo ?: ActionInfo().also { actionInfo = it }
         info.apply(block)

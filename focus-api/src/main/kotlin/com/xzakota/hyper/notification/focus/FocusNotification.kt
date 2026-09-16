@@ -11,7 +11,6 @@ import com.xzakota.hyper.notification.focus.util.JSONUtils
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import java.util.function.Consumer
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class FocusNotification private constructor() {
@@ -74,9 +73,6 @@ class FocusNotification private constructor() {
          * ==================================================== */
 
         @JvmStatic
-        fun createV2(consumer : Consumer<FocusTemplate>) : FocusNotification = createV2(consumer::accept)
-
-        @JvmSynthetic
         fun createV2(block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
             factory = FocusTemplateFactory.V2(
@@ -88,9 +84,6 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createV3(consumer : Consumer<FocusTemplateV3>) : FocusNotification = createV3(consumer::accept)
-
-        @JvmSynthetic
         fun createV3(block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
             factory = FocusTemplateFactory.V3(
@@ -102,15 +95,9 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun buildV2(consumer : Consumer<FocusTemplate>) : Bundle = createV2(consumer).buildBundle()
-
-        @JvmSynthetic
         fun buildV2(block : FocusTemplate.() -> Unit) : Bundle = createV2(block).buildBundle()
 
         @JvmStatic
-        fun buildV3(consumer : Consumer<FocusTemplateV3>) : Bundle = createV3(consumer).buildBundle()
-
-        @JvmSynthetic
         fun buildV3(block : FocusTemplateV3.() -> Unit) : Bundle = createV3(block).buildBundle()
 
         /* ====================================================
@@ -118,9 +105,6 @@ class FocusNotification private constructor() {
          * ==================================================== */
 
         @JvmStatic
-        fun createCustomV2(consumer : Consumer<CustomFocusTemplate>) : FocusNotification = createCustomV2(consumer::accept)
-
-        @JvmSynthetic
         fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
             factory = FocusTemplateFactory.CustomV2(
@@ -132,9 +116,6 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : FocusNotification = createCustomV3(consumer::accept)
-
-        @JvmSynthetic
         fun createCustomV3(block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
             factory = FocusTemplateFactory.CustomV3(
@@ -146,15 +127,9 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun buildCustomV2(consumer : Consumer<CustomFocusTemplate>) : Bundle = createCustomV2(consumer).buildBundle()
-
-        @JvmSynthetic
         fun buildCustomV2(block : CustomFocusTemplate.() -> Unit) : Bundle = createCustomV2(block).buildBundle()
 
         @JvmStatic
-        fun buildCustomV3(consumer : Consumer<CustomFocusTemplateV3>) : Bundle = createCustomV3(consumer).buildBundle()
-
-        @JvmSynthetic
         fun buildCustomV3(block : CustomFocusTemplateV3.() -> Unit) : Bundle = createCustomV3(block).buildBundle()
     }
 

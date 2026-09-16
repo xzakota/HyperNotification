@@ -4,7 +4,6 @@ package com.xzakota.hyper.notification.island.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @FocusNotificationDsl
 @Serializable
@@ -38,9 +37,6 @@ internal interface IProgressInfoCreator {
      */
     var progressInfo : ProgressInfo?
 
-    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo(consumer::accept)
-
-    @JvmSynthetic
     fun progressInfo(block : ProgressInfo.() -> Unit) {
         val info = progressInfo ?: ProgressInfo().also { progressInfo = it }
         info.apply(block)

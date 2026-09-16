@@ -2,7 +2,6 @@ package com.xzakota.hyper.notification.island.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @Suppress("unused")
 @FocusNotificationDsl
@@ -15,9 +14,6 @@ class SmallIslandArea : IPicInfoCreator {
      */
     var combinePicInfo : CombinePicInfo? = null
 
-    fun combinePicInfo(consumer : Consumer<CombinePicInfo>) = combinePicInfo(consumer::accept)
-
-    @JvmSynthetic
     fun combinePicInfo(block : CombinePicInfo.() -> Unit) {
         val info = combinePicInfo ?: CombinePicInfo().also { combinePicInfo = it }
         info.apply(block)

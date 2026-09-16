@@ -4,7 +4,6 @@ package com.xzakota.hyper.notification.focus.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @FocusNotificationDsl
 @Serializable
@@ -32,9 +31,6 @@ internal interface IAnimIconInfoCreator {
      */
     var animIconInfo : AnimIconInfo?
 
-    fun animIconInfo(consumer : Consumer<AnimIconInfo>) = animIconInfo(consumer::accept)
-
-    @JvmSynthetic
     fun animIconInfo(block : AnimIconInfo.() -> Unit) {
         val info = animIconInfo ?: AnimIconInfo().also { animIconInfo = it }
         info.apply(block)

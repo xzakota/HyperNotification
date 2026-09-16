@@ -11,7 +11,6 @@ import com.xzakota.hyper.notification.focus.model.HintInfo
 import com.xzakota.hyper.notification.focus.model.PicInfo
 import com.xzakota.hyper.notification.focus.model.ProgressInfo
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @Serializable
 open class FocusTemplate : BaseFocusTemplate() {
@@ -60,73 +59,46 @@ open class FocusTemplate : BaseFocusTemplate() {
         reflectCollect(from, FocusTemplate::class.java)
     }
 
-    fun baseInfo(consumer : Consumer<BaseInfo>) = baseInfo(consumer::accept)
-
-    @JvmSynthetic
     fun baseInfo(block : BaseInfo.() -> Unit) {
         val info = baseInfo ?: BaseInfo().also { baseInfo = it }
         info.apply(block)
     }
 
-    fun chatInfo(consumer : Consumer<ChatInfo>) = chatInfo(consumer::accept)
-
-    @JvmSynthetic
     fun chatInfo(block : ChatInfo.() -> Unit) {
         val info = chatInfo ?: ChatInfo().also { chatInfo = it }
         info.apply(block)
     }
 
-    fun highlightInfo(consumer : Consumer<HighlightInfo>) = highlightInfo(consumer::accept)
-
-    @JvmSynthetic
     fun highlightInfo(block : HighlightInfo.() -> Unit) {
         val info = highlightInfo ?: HighlightInfo().also { highlightInfo = it }
         info.apply(block)
     }
 
-    fun hintInfo(consumer : Consumer<HintInfo>) = hintInfo(consumer::accept)
-
-    @JvmSynthetic
     fun hintInfo(block : HintInfo.() -> Unit) {
         val info = hintInfo ?: HintInfo().also { hintInfo = it }
         info.apply(block)
     }
 
-    fun progressInfo(consumer : Consumer<ProgressInfo>) = progressInfo(consumer::accept)
-
-    @JvmSynthetic
     fun progressInfo(block : ProgressInfo.() -> Unit) {
         val info = progressInfo ?: ProgressInfo().also { progressInfo = it }
         info.apply(block)
     }
 
-    fun picInfo(consumer : Consumer<PicInfo>) = picInfo(consumer::accept)
-
-    @JvmSynthetic
     fun picInfo(block : PicInfo.() -> Unit) {
         val info = picInfo ?: PicInfo().also { picInfo = it }
         info.apply(block)
     }
 
-    fun bgInfo(consumer : Consumer<BgInfo>) = bgInfo(consumer::accept)
-
-    @JvmSynthetic
     fun bgInfo(block : BgInfo.() -> Unit) {
         val info = bgInfo ?: BgInfo().also { bgInfo = it }
         info.apply(block)
     }
 
-    fun actions(consumer : Consumer<ArrayList<ActionInfo>>) = actions(consumer::accept)
-
-    @JvmSynthetic
     fun actions(block : ArrayList<ActionInfo>.() -> Unit) {
         val info = actions ?: arrayListOf<ActionInfo>().also { actions = it }
         info.apply(block)
     }
 
-    fun ArrayList<ActionInfo>.addActionInfo(consumer : Consumer<ActionInfo>) = addActionInfo(consumer::accept)
-
-    @JvmSynthetic
     fun ArrayList<ActionInfo>.addActionInfo(block : ActionInfo.() -> Unit) {
         add(ActionInfo().apply(block))
     }

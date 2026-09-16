@@ -2,7 +2,6 @@ package com.xzakota.hyper.notification.island.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @Suppress("unused")
 @FocusNotificationDsl
@@ -16,9 +15,6 @@ class CombinePicInfo : IPicInfoCreator, IProgressInfoCreator {
     override var picInfo : PicInfo? = null
     override var progressInfo : ProgressInfo? = null
 
-    fun smallPicInfo(consumer : Consumer<PicInfo>) = smallPicInfo(consumer::accept)
-
-    @JvmSynthetic
     fun smallPicInfo(block : PicInfo.() -> Unit) {
         val info = smallPicInfo ?: PicInfo().also { smallPicInfo = it }
         info.apply(block)

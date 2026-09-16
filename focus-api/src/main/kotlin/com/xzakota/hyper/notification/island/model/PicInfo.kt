@@ -4,7 +4,6 @@ package com.xzakota.hyper.notification.island.model
 
 import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
-import java.util.function.Consumer
 
 @FocusNotificationDsl
 @Serializable
@@ -35,9 +34,6 @@ internal interface IPicInfoCreator {
      */
     var picInfo : PicInfo?
 
-    fun picInfo(consumer : Consumer<PicInfo>) = picInfo(consumer::accept)
-
-    @JvmSynthetic
     fun picInfo(block : PicInfo.() -> Unit) {
         val info = picInfo ?: PicInfo().also { picInfo = it }
         info.apply(block)
