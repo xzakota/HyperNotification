@@ -6,7 +6,6 @@ import android.os.Parcelable
 import com.xzakota.hyper.notification.focus.FocusNotification
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import java.lang.reflect.Modifier
 
 @Serializable
 open class BaseFocusTemplate internal constructor() {
@@ -85,24 +84,18 @@ open class BaseFocusTemplate internal constructor() {
     fun createAction(key : String, value : Parcelable) : String = notification.createAction(key, value)
 
     open fun copyFrom(from : Any) {
-        reflectCollect(from, BaseFocusTemplate::class.java)
-    }
-
-    protected fun reflectCollect(from : Any, clazz : Class<*>) {
-        if (javaClass != clazz && !javaClass.isInstance(from)) {
-            return
-        }
-
-        clazz.declaredFields.forEach {
-            if (Modifier.isStatic(it.modifiers)) {
-                return@forEach
-            }
-
-            it.isAccessible = true
-            val obj = it.get(from)
-            if (obj != null) {
-                it.set(this, obj)
-            }
+        if (from is BaseFocusTemplate) {
+            from.ticker?.let { ticker = it }
+            from.tickerPic?.let { tickerPic = it }
+            from.tickerPicDark?.let { tickerPicDark = it }
+            from.showSmallIcon?.let { showSmallIcon = it }
+            from.timeout?.let { timeout = it }
+            from.updatable?.let { updatable = it }
+            from.enableFloat?.let { enableFloat = it }
+            from.aodPic?.let { aodPic = it }
+            from.aodTitle?.let { aodTitle = it }
+            from.reopen?.let { reopen = it }
+            from.filterWhenNoPermission?.let { filterWhenNoPermission = it }
         }
     }
 }

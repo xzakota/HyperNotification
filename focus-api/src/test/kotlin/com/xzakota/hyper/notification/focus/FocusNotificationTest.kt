@@ -1,6 +1,8 @@
 package com.xzakota.hyper.notification.focus
 
 import com.xzakota.BaseTestCallback
+import com.xzakota.hyper.notification.focus.template.FocusTemplateV3
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -83,5 +85,26 @@ class FocusNotificationTest {
         assertTrue(json.contains("Title1"))
         assertTrue(json.contains("param_island"))
         assertTrue(json.contains("miui.focus.placeholder"))
+    }
+
+    @Test
+    fun copyFromTest() {
+        val src = FocusTemplateV3().apply {
+            ticker = "Original Ticker"
+            enableFloat = true
+            business = "Test Business"
+            baseInfo {
+                title = "Original Title"
+            }
+        }
+
+        val dest = FocusTemplateV3().apply {
+            copyFrom(src)
+        }
+
+        assertEquals("Original Ticker", dest.ticker)
+        assertEquals(true, dest.enableFloat)
+        assertEquals("Test Business", dest.business)
+        assertEquals("Original Title", dest.baseInfo?.title)
     }
 }

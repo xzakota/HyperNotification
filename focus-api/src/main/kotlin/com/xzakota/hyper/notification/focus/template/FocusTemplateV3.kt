@@ -61,7 +61,25 @@ class FocusTemplateV3 : FocusTemplate(), IExtraV3Param, IIslandTemplateCreator {
 
     override fun copyFrom(from : Any) {
         super.copyFrom(from)
-        reflectCollect(from, FocusTemplateV3::class.java)
+        if (from is FocusTemplateV3) {
+            from.coverInfo?.let { coverInfo = it }
+            from.highlightInfoV3?.let { highlightInfoV3 = it }
+            from.iconTextInfo?.let { iconTextInfo = it }
+            from.multiProgressInfo?.let { multiProgressInfo = it }
+            from.animTextInfo?.let { animTextInfo = it }
+            from.textButton?.let { textButton = it }
+            from.island?.let { island = it }
+            from.cancel?.let { cancel = it }
+            from.hideDeco?.let { hideDeco = it }
+            from.isShowNotification?.let { isShowNotification = it }
+            from.islandFirstFloat?.let { islandFirstFloat = it }
+            from.outEffectColor?.let { outEffectColor = it }
+            from.outEffectSrc?.let { outEffectSrc = it }
+            from.sequence?.let { sequence = it }
+            from.business?.let { business = it }
+            from.notifyId?.let { notifyId = it }
+            from.orderId?.let { orderId = it }
+        }
     }
 
     fun coverInfo(block : CoverInfo.() -> Unit) {

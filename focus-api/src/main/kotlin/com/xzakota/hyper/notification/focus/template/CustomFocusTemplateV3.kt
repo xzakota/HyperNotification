@@ -23,11 +23,22 @@ class CustomFocusTemplateV3 : CustomFocusTemplate(), IExtraV3Param, IIslandTempl
 
     override fun copyFrom(from : Any) {
         super.copyFrom(from)
-        reflectCollect(from, CustomFocusTemplateV3::class.java)
+        if (from is CustomFocusTemplateV3) {
+            from.island?.let { island = it }
+            from.cancel?.let { cancel = it }
+            from.hideDeco?.let { hideDeco = it }
+            from.isShowNotification?.let { isShowNotification = it }
+            from.islandFirstFloat?.let { islandFirstFloat = it }
+            from.outEffectColor?.let { outEffectColor = it }
+            from.outEffectSrc?.let { outEffectSrc = it }
+            from.sequence?.let { sequence = it }
+            from.business?.let { business = it }
+            from.notifyId?.let { notifyId = it }
+            from.orderId?.let { orderId = it }
+        }
     }
 
-    @Suppress("ClassName")
-    companion object `Companion-Object` {
+    companion object {
         const val LAYOUT_ISLAND_EXPAND = "miui.focus.rv.island.expand"
     }
 }

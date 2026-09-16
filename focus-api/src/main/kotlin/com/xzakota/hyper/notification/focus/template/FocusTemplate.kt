@@ -56,7 +56,16 @@ open class FocusTemplate : BaseFocusTemplate() {
 
     override fun copyFrom(from : Any) {
         super.copyFrom(from)
-        reflectCollect(from, FocusTemplate::class.java)
+        if (from is FocusTemplate) {
+            from.baseInfo?.let { baseInfo = it }
+            from.chatInfo?.let { chatInfo = it }
+            from.highlightInfo?.let { highlightInfo = it }
+            from.hintInfo?.let { hintInfo = it }
+            from.progressInfo?.let { progressInfo = it }
+            from.picInfo?.let { picInfo = it }
+            from.bgInfo?.let { bgInfo = it }
+            from.actions?.let { actions = it }
+        }
     }
 
     fun baseInfo(block : BaseInfo.() -> Unit) {
