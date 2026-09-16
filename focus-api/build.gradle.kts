@@ -14,8 +14,8 @@ version = "1.4"
 
 android {
     namespace = "com.xzakota.hyper.notification.focus"
-    compileSdk = 36
-    buildToolsVersion = "36.0.0"
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         minSdk = 27

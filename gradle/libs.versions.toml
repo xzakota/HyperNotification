@@ -1,20 +1,23 @@
 [versions]
-kotlin = "2.3.10"
-junit6 = "6.0.3"
-agp = "9.0.0"
+kotlin = "2.4.20"
+kotlinx-json = "1.11.0"
+
+agp = "9.3.2"
+
+maven-publish = "0.37.0"
+junit6 = "6.1.3"
 
 [libraries]
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.10.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-json" }
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit6" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 junit-platform-laucher = { module = "org.junit.platform:junit-platform-launcher" }
 
 [plugins]
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
 android-library = { id = "com.android.library", version.ref = "agp" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-
-vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.36.0" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
