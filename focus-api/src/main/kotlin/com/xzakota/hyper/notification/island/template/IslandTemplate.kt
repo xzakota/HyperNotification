@@ -2,12 +2,14 @@
 
 package com.xzakota.hyper.notification.island.template
 
+import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import com.xzakota.hyper.notification.island.model.BigIslandArea
 import com.xzakota.hyper.notification.island.model.ShareData
 import com.xzakota.hyper.notification.island.model.SmallIslandArea
 import kotlinx.serialization.Serializable
 import java.util.function.Consumer
 
+@FocusNotificationDsl
 @Serializable
 class IslandTemplate {
     var islandPriority : Int? = null

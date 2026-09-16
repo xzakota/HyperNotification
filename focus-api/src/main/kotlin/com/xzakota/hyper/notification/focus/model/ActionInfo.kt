@@ -2,9 +2,11 @@
 
 package com.xzakota.hyper.notification.focus.model
 
+import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
 import java.util.function.Consumer
 
+@FocusNotificationDsl
 @Serializable
 class ActionInfo : IProgressInfoCreator {
     /**

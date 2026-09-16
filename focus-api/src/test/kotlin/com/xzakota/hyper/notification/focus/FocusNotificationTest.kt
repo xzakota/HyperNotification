@@ -1,6 +1,8 @@
 package com.xzakota.hyper.notification.focus
 
 import com.xzakota.BaseTestCallback
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -31,7 +33,11 @@ class FocusNotificationTest {
             }
         }
 
-        println(config)
+        val json = config.getFactoryJSON()
+        assertNotNull(json)
+        assertTrue(json.contains("Title1"))
+        assertTrue(json.contains("Title2"))
+        assertTrue(json.contains("miui.focus.placeholder"))
     }
 
     @Test
@@ -72,6 +78,10 @@ class FocusNotificationTest {
             }
         }
 
-        println(config)
+        val json = config.getFactoryJSON()
+        assertNotNull(json)
+        assertTrue(json.contains("Title1"))
+        assertTrue(json.contains("param_island"))
+        assertTrue(json.contains("miui.focus.placeholder"))
     }
 }

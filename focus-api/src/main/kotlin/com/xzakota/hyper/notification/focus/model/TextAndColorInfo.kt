@@ -1,8 +1,10 @@
 package com.xzakota.hyper.notification.focus.model
 
+import com.xzakota.hyper.notification.focus.dsl.FocusNotificationDsl
 import kotlinx.serialization.Serializable
 
 @Suppress("unused")
+@FocusNotificationDsl
 @Serializable
 abstract class TextAndColorInfo {
     /**
