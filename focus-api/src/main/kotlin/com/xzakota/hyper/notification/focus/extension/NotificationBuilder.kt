@@ -15,10 +15,10 @@ fun FocusNotification.buildIn(builder : Notification.Builder) {
     builder.addExtras(buildBundle())
 }
 
-fun FocusNotification.createBuilder(
+inline fun FocusNotification.createBuilder(
     context : Context,
     channelId : String,
-    block : Notification.Builder.() -> Unit
+    crossinline block : Notification.Builder.() -> Unit
 ) : Notification.Builder = Notification.Builder(context, channelId).also {
     buildIn(it)
     block(it)
@@ -28,26 +28,26 @@ fun Notification.Builder.notify(manager : NotificationManager, id : Int) {
     manager.notify(id, build())
 }
 
-fun Notification.Builder.addFocusParamV2(
-    block : FocusTemplate.() -> Unit
+inline fun Notification.Builder.addFocusParamV2(
+    crossinline block : FocusTemplate.() -> Unit
 ) : Notification.Builder = apply {
     addExtras(FocusNotification.buildV2(block))
 }
 
-fun Notification.Builder.addCustomFocusParamV2(
-    block : CustomFocusTemplate.() -> Unit
+inline fun Notification.Builder.addCustomFocusParamV2(
+    crossinline block : CustomFocusTemplate.() -> Unit
 ) : Notification.Builder = apply {
     addExtras(FocusNotification.buildCustomV2(block))
 }
 
-fun Notification.Builder.addFocusParamV3(
-    block : FocusTemplateV3.() -> Unit
+inline fun Notification.Builder.addFocusParamV3(
+    crossinline block : FocusTemplateV3.() -> Unit
 ) : Notification.Builder = apply {
     addExtras(FocusNotification.buildV3(block))
 }
 
-fun Notification.Builder.addCustomFocusParamV3(
-    block : CustomFocusTemplateV3.() -> Unit
+inline fun Notification.Builder.addCustomFocusParamV3(
+    crossinline block : CustomFocusTemplateV3.() -> Unit
 ) : Notification.Builder = apply {
     addExtras(FocusNotification.buildCustomV3(block))
 }

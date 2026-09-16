@@ -76,6 +76,7 @@ open class BaseFocusTemplate internal constructor() {
     @Transient
     internal lateinit var notification : FocusNotification
 
+    @PublishedApi
     internal fun configWith(notification : FocusNotification) {
         this.notification = notification
     }

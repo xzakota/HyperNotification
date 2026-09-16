@@ -16,8 +16,7 @@ open class CustomFocusTemplate : BaseFocusTemplate() {
         }
     }
 
-    @Suppress("ClassName")
-    companion object `Companion-Object` {
+    companion object {
         const val LAYOUT = "miui.focus.rv"
         const val LAYOUT_NIGHT = "miui.focus.rvNight"
         const val LAYOUT_AOD = "miui.focus.rvAod"

@@ -13,26 +13,26 @@ fun FocusNotification.buildIn(n : Notification) {
     n.extras.putAll(buildBundle())
 }
 
-fun Notification.addFocusParamV2(
-    block : FocusTemplate.() -> Unit
+inline fun Notification.addFocusParamV2(
+    crossinline block : FocusTemplate.() -> Unit
 ) : Notification = apply {
     extras.putAll(FocusNotification.buildV2(block))
 }
 
-fun Notification.addCustomFocusParamV2(
-    block : CustomFocusTemplate.() -> Unit
+inline fun Notification.addCustomFocusParamV2(
+    crossinline block : CustomFocusTemplate.() -> Unit
 ) : Notification = apply {
     extras.putAll(FocusNotification.buildCustomV2(block))
 }
 
-fun Notification.addFocusParamV3(
-    block : FocusTemplateV3.() -> Unit
+inline fun Notification.addFocusParamV3(
+    crossinline block : FocusTemplateV3.() -> Unit
 ) : Notification = apply {
     extras.putAll(FocusNotification.buildV3(block))
 }
 
-fun Notification.addCustomFocusParamV3(
-    block : CustomFocusTemplateV3.() -> Unit
+inline fun Notification.addCustomFocusParamV3(
+    crossinline block : CustomFocusTemplateV3.() -> Unit
 ) : Notification = apply {
     extras.putAll(FocusNotification.buildCustomV3(block))
 }

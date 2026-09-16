@@ -13,11 +13,13 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class FocusNotification private constructor() {
-    private lateinit var factory : FocusTemplateFactory
-    private var focusVersion = -1
-    private val pics = mutableMapOf<String, Parcelable?>()
-    private val actions = mutableMapOf<String, Parcelable?>()
+class FocusNotification @PublishedApi internal constructor() {
+    @PublishedApi
+    internal lateinit var factory : FocusTemplateFactory
+    @PublishedApi
+    internal var focusVersion = -1
+    private var pics : MutableMap<String, Parcelable?>? = null
+    private var actions : MutableMap<String, Parcelable?>? = null
 
     fun buildBundle() : Bundle = Bundle().apply {
         when (factory) {
@@ -33,47 +35,46 @@ class FocusNotification private constructor() {
             else -> putString("miui.focus.param", getFactoryJSON())
         }
 
-        if (pics.isNotEmpty()) {
-            putBundle("miui.focus.pics", buildPicsBundle())
+        pics?.takeIf { it.isNotEmpty() }?.let { map ->
+            putBundle("miui.focus.pics", buildPicsBundle(map))
         }
 
-        if (actions.isNotEmpty()) {
-            putBundle("miui.focus.actions", buildActionsBundle())
+        actions?.takeIf { it.isNotEmpty() }?.let { map ->
+            putBundle("miui.focus.actions", buildActionsBundle(map))
         }
     }
 
     fun getFactoryJSON() : String = JSONUtils.toJSONString(factory)
 
     internal fun createPicture(key : String, value : Parcelable) : String = key.also {
-        pics[it] = value
+        (pics ?: mutableMapOf<String, Parcelable?>().also { map -> pics = map })[it] = value
     }
 
     internal fun createAction(key : String, value : Parcelable) : String = key.also {
-        actions[it] = value
+        (actions ?: mutableMapOf<String, Parcelable?>().also { map -> actions = map })[it] = value
     }
 
-    private fun buildPicsBundle() : Bundle = Bundle().apply {
-        pics.forEach { (k, v) ->
+    private fun buildPicsBundle(map : Map<String, Parcelable?>) : Bundle = Bundle().apply {
+        map.forEach { (k, v) ->
             putParcelable(k, v)
         }
     }
 
-    private fun buildActionsBundle() : Bundle = Bundle().apply {
-        actions.forEach { (k, v) ->
+    private fun buildActionsBundle(map : Map<String, Parcelable?>) : Bundle = Bundle().apply {
+        map.forEach { (k, v) ->
             putParcelable(k, v)
         }
     }
 
-    override fun toString() : String = "factory => ${getFactoryJSON()}, pics(${pics.size}) => ${pics.keys}"
+    override fun toString() : String = "factory => ${getFactoryJSON()}, pics(${pics?.size ?: 0}) => ${pics?.keys}"
 
-    @Suppress("ClassName")
-    companion object `Companion-Object` {
+    companion object {
         /* ====================================================
          * for default focus style
          * ==================================================== */
 
         @JvmStatic
-        fun createV2(block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
+        inline fun createV2(crossinline block : FocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
             factory = FocusTemplateFactory.V2(
                 FocusTemplate().also {
@@ -84,7 +85,7 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createV3(block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
+        inline fun createV3(crossinline block : FocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
             factory = FocusTemplateFactory.V3(
                 FocusTemplateV3().also {
@@ -95,17 +96,17 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun buildV2(block : FocusTemplate.() -> Unit) : Bundle = createV2(block).buildBundle()
+        inline fun buildV2(crossinline block : FocusTemplate.() -> Unit) : Bundle = createV2(block).buildBundle()
 
         @JvmStatic
-        fun buildV3(block : FocusTemplateV3.() -> Unit) : Bundle = createV3(block).buildBundle()
+        inline fun buildV3(crossinline block : FocusTemplateV3.() -> Unit) : Bundle = createV3(block).buildBundle()
 
         /* ====================================================
          * for custom focus style
          * ==================================================== */
 
         @JvmStatic
-        fun createCustomV2(block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
+        inline fun createCustomV2(crossinline block : CustomFocusTemplate.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 2
             factory = FocusTemplateFactory.CustomV2(
                 CustomFocusTemplate().also {
@@ -116,7 +117,7 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun createCustomV3(block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
+        inline fun createCustomV3(crossinline block : CustomFocusTemplateV3.() -> Unit) : FocusNotification = FocusNotification().apply {
             focusVersion = 3
             factory = FocusTemplateFactory.CustomV3(
                 CustomFocusTemplateV3().also {
@@ -127,12 +128,13 @@ class FocusNotification private constructor() {
         }
 
         @JvmStatic
-        fun buildCustomV2(block : CustomFocusTemplate.() -> Unit) : Bundle = createCustomV2(block).buildBundle()
+        inline fun buildCustomV2(crossinline block : CustomFocusTemplate.() -> Unit) : Bundle = createCustomV2(block).buildBundle()
 
         @JvmStatic
-        fun buildCustomV3(block : CustomFocusTemplateV3.() -> Unit) : Bundle = createCustomV3(block).buildBundle()
+        inline fun buildCustomV3(crossinline block : CustomFocusTemplateV3.() -> Unit) : Bundle = createCustomV3(block).buildBundle()
     }
 
+    @PublishedApi
     @Serializable
     internal sealed class FocusTemplateFactory(@Transient open val param : BaseFocusTemplate? = null) {
         @Serializable
